@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id "org.sonarqube" version "2.7"
+    id 'jacoco'
 }
 
 group 'org.example'
@@ -15,17 +16,14 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 
-subprojects {
-    apply plugin: 'java'
-
-    sonarqube {
-        properties {
-            property "sonar.sources", "src/main/java"
-            property "sonar.tests", "src/test/java"
-          //  property "sonar.coverage.jacoco.xmlReportPaths", "build/jacoco/jacoco.xml"
-        }
+sonarqube {
+    properties {
+        property "sonar.sources", "src/main/java"
+        property "sonar.tests", "src/test/java"
+        property "sonar.coverage.jacoco.xmlReportPaths", "build/jacoco/jacoco.xml"
     }
 }
+
 
 test {
     useJUnitPlatform()
