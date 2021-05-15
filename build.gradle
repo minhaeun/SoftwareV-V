@@ -44,13 +44,16 @@ jacoco {
 
 jacocoTestReport {
     reports {
-        html.enabled false
-        xml.enabled false
+        html.enabled true
+        xml.enabled true
         csv.enabled true
 
         html.destination file("${buildDir}/jacoco/jacoco.html")
         xml.destination file("${buildDir}/jacoco/jacoco.xml")
+        csv.destination file("${buildDir}/jacoco/jacoco.csv")
     }
+
+    //finalizedBy 'jacocoTestCoverageVerification' // 추가
 
 //    이 설정을 열어주면 Code Coverage가 일정 이상이어야 Build됨
 //    finalizedBy 'jacocoTestCoverageVerification'
