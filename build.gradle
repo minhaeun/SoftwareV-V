@@ -24,14 +24,14 @@ sonarqube {
         property "sonar.login", "ce980c1d54dc3feb7f9ebfa50195b422a537f4f6"
         property "sonar.sources", "src/main/java"
         property "sonar.tests", "src/test/java"
-        property "sonar.coverage.jacoco.xmlReportPaths", "build/jacoco/jacoco.xml"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/jacoco/jacoco.xml"
     }
 }
 
 
 test {
     jacoco{
-        destinationFile = file("build/jacoco/jacoco.exec")
+        destinationFile = file("${buildDir}/jacoco/jacoco.exec")
     }
     useJUnitPlatform()
 
@@ -48,8 +48,8 @@ jacocoTestReport {
         xml.enabled true
         csv.enabled false
 
-        html.destination file("build/jacoco/jacoco.html")
-        xml.destination file("build/jacoco/jacoco.xml")
+        html.destination file("${buildDir}/jacoco/jacoco.html")
+        xml.destination file("${buildDir}/jacoco/jacoco.xml")
     }
 
 //    이 설정을 열어주면 Code Coverage가 일정 이상이어야 Build됨
