@@ -1,0 +1,61 @@
+?requestStockMessage == src_id: 0, msg_type: 1, msg: 빡텐션
+CrequestLocationMessage == src_id: 0,dst_id: 0, msg_type: 4, msg: 
+IResponseBroadCastMessage == src_id: 0, dst_id: 0, msg_type: 5, msg: 101
+CrequestLocationMessage == src_id: 0,dst_id: 1, msg_type: 4, msg: 
+IResponseBroadCastMessage == src_id: 1, dst_id: 1, msg_type: 5, msg: 202
+0
+KrequestStockMessage == src_id: 0, msg_type: 1, msg: 移좎꽦?궗?씠?떎
+GResponseBroadCastMessage == src_id: 0, dst_id: 0, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 1, dst_id: 1, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 2, dst_id: 2, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 3, dst_id: 3, msg_type: 2, msg: 4
+GResponseBroadCastMessage == src_id: 4, dst_id: 4, msg_type: 2, msg: 1
+GResponseBroadCastMessage == src_id: 5, dst_id: 5, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 6, dst_id: 6, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 7, dst_id: 7, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 0, dst_id: 0, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 1, dst_id: 1, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 2, dst_id: 2, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 3, dst_id: 3, msg_type: 2, msg: 4
+GResponseBroadCastMessage == src_id: 4, dst_id: 4, msg_type: 2, msg: 1
+GResponseBroadCastMessage == src_id: 5, dst_id: 5, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 6, dst_id: 6, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 7, dst_id: 7, msg_type: 2, msg: 0
+BrequestStockMessage == src_id: 1, msg_type: 1, msg: ?빂?떇?뒪
+HResponseBroadCastMessage == src_id: 0, dst_id: 0, msg_type: 2, msg: 10
+GResponseBroadCastMessage == src_id: 1, dst_id: 1, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 2, dst_id: 2, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 3, dst_id: 3, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 4, dst_id: 4, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 5, dst_id: 5, msg_type: 2, msg: 0
+HResponseBroadCastMessage == src_id: 6, dst_id: 6, msg_type: 2, msg: 12
+GResponseBroadCastMessage == src_id: 7, dst_id: 7, msg_type: 2, msg: 0
+HResponseBroadCastMessage == src_id: 0, dst_id: 0, msg_type: 2, msg: 10
+GResponseBroadCastMessage == src_id: 1, dst_id: 1, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 2, dst_id: 2, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 3, dst_id: 3, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 4, dst_id: 4, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 5, dst_id: 5, msg_type: 2, msg: 0
+HResponseBroadCastMessage == src_id: 6, dst_id: 6, msg_type: 2, msg: 12
+GResponseBroadCastMessage == src_id: 7, dst_id: 7, msg_type: 2, msg: 0
+鍮≫뀗?뀡
+CrequestStockMessage == src_id: 0, msg_type: 1, msg: 鍮≫뀗?뀡
+GResponseBroadCastMessage == src_id: 0, dst_id: 0, msg_type: 2, msg: 0
+HResponseBroadCastMessage == src_id: 1, dst_id: 1, msg_type: 2, msg: 10
+HResponseBroadCastMessage == src_id: 2, dst_id: 2, msg_type: 2, msg: 13
+GResponseBroadCastMessage == src_id: 3, dst_id: 3, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 4, dst_id: 4, msg_type: 2, msg: 0
+HResponseBroadCastMessage == src_id: 5, dst_id: 5, msg_type: 2, msg: 10
+GResponseBroadCastMessage == src_id: 6, dst_id: 6, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 7, dst_id: 7, msg_type: 2, msg: 1
+GResponseBroadCastMessage == src_id: 0, dst_id: 0, msg_type: 2, msg: 0
+HResponseBroadCastMessage == src_id: 1, dst_id: 1, msg_type: 2, msg: 10
+HResponseBroadCastMessage == src_id: 2, dst_id: 2, msg_type: 2, msg: 13
+GResponseBroadCastMessage == src_id: 3, dst_id: 3, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 4, dst_id: 4, msg_type: 2, msg: 0
+HResponseBroadCastMessage == src_id: 5, dst_id: 5, msg_type: 2, msg: 10
+GResponseBroadCastMessage == src_id: 6, dst_id: 6, msg_type: 2, msg: 0
+GResponseBroadCastMessage == src_id: 7, dst_id: 7, msg_type: 2, msg: 1
+<>GResponseBroadCastMessage == src_id: 2, dst_id: 2, msg_type: 2, msg: 3
+<>GResponseBroadCastMessage == src_id: 1, dst_id: 1, msg_type: 2, msg: 3
+<>GResponseBroadCastMessage == src_id: 2, dst_id: 2, msg_type: 2, msg: 3

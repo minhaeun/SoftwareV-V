@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Network.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ctiptest</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Network.java</span></div><h1>Network.java</h1><pre class="source lang-java linenums">import java.util.ArrayList;
+
+public class Network {
+    ArrayList&lt;DVM&gt; dvmList;
+<span class="fc" id="L5">    Network(ArrayList&lt;DVM&gt; dvmList){</span>
+<span class="fc" id="L6">        this.dvmList = dvmList;</span>
+<span class="fc" id="L7">    }</span>
+    public Object handleRequestMessage(Message message){
+<span class="fc" id="L9">        int src_id = message.getSrc_id();</span>
+<span class="fc" id="L10">        int dst_id = message.getDst_id();</span>
+<span class="fc" id="L11">        int msg_type = message.getMsg_type();</span>
+<span class="fc" id="L12">        String msg = message.getMsg();</span>
+<span class="fc bfc" id="L13" title="All 2 branches covered.">        if(msg_type == MsgType.REQUEST_STOCK){</span>
+<span class="fc bfc" id="L14" title="All 2 branches covered.">            if(dst_id == 0){</span>
+<span class="fc" id="L15">                ArrayList&lt;DVM&gt; accessibleDVMList = (ArrayList&lt;DVM&gt;)handleStockRequest(src_id, 0, msg);</span>
+<span class="fc" id="L16">                return accessibleDVMList;</span>
+            }
+            else{
+<span class="fc" id="L19">                int stock = (int)handleStockRequest(src_id, dst_id, msg);</span>
+<span class="fc" id="L20">                return stock;</span>
+            }
+
+        }
+<span class="pc bpc" id="L24" title="1 of 2 branches missed.">        else if(msg_type == MsgType.REQUEST_LOCATION){</span>
+<span class="fc" id="L25">            int address = handleLocationRequest(src_id, dst_id);</span>
+<span class="fc" id="L26">            return address;</span>
+        }
+<span class="nc" id="L28">        return null;</span>
+    }
+
+    private Object handleStockRequest(int src_id, int dst_id, String msg) {
+<span class="fc" id="L32">        ArrayList&lt;DVM&gt; accessibleDVMList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        if(dst_id == 0){</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">            for(DVM dvm : dvmList){</span>
+<span class="fc" id="L35">                boolean isInStock = false;</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">                for(Drink drink: dvm.getDrink_list()){</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">                    if(drink.getName().equals(msg)){</span>
+<span class="fc" id="L38">                        Message message = dvm.makeStockResponseMessage(src_id, drink.getStock()); // DVM�씠 �쓳�떟 硫붿꽭吏�瑜� 留뚮벉</span>
+<span class="fc" id="L39">                        int stock = dvm.responseStockMessage(this, message); // DVM�씠 Network瑜� �넻�빐 �쓳�떟硫붿떆吏�瑜� �쟾�떖�븯怨� Network �궡遺��뿉�꽌 stock 媛믪쓣 李얠븘 由ы꽩�빐以�</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">                        if(stock != 0){</span>
+<span class="fc" id="L41">                            isInStock = true;</span>
+<span class="fc" id="L42">                            break;</span>
+                        }
+                    }
+<span class="fc" id="L45">                }</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">                if(isInStock){</span>
+<span class="fc" id="L47">                    accessibleDVMList.add(dvm);</span>
+                }
+<span class="fc" id="L49">            }</span>
+        }
+        else{
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">            for(DVM dvm : dvmList) {</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">                if (dvm.getId() == dst_id){</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">                    for (Drink drink : dvm.getDrink_list()) {</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">                        if (drink.getName().equals(msg)) {</span>
+<span class="fc" id="L56">                            Message message = dvm.makeStockResponseMessage(src_id, drink.getStock()); // DVM�씠 �쓳�떟 硫붿꽭吏�瑜� 留뚮벉</span>
+<span class="fc" id="L57">                            int stock = dvm.responseStockMessage(this, message); // DVM�씠 Network瑜� �넻�빐 �쓳�떟硫붿떆吏�瑜� �쟾�떖�븯怨� Network �궡遺��뿉�꽌 stock 媛믪쓣 李얠븘 由ы꽩�빐以�</span>
+<span class="fc" id="L58">                            return stock;</span>
+                        }
+<span class="nc" id="L60">                    }</span>
+                }
+<span class="fc" id="L62">            }</span>
+        }
+<span class="fc" id="L64">        return accessibleDVMList;</span>
+    }
+
+    public int responseBroadcastMessage(Message message) {
+<span class="fc" id="L68">        int src_id = message.getSrc_id();</span>
+<span class="fc" id="L69">        int dst_id = message.getDst_id();</span>
+<span class="fc" id="L70">        String msg = message.getMsg();</span>
+<span class="fc" id="L71">        int stock = Integer.parseInt(msg);</span>
+
+<span class="fc" id="L73">        return stock;</span>
+
+    }
+
+    public int responseNormalMessage(Message message) {
+<span class="fc" id="L78">        int data = -1;</span>
+<span class="fc" id="L79">        int msg_type = message.getMsg_type();</span>
+<span class="fc" id="L80">        String msg = message.getMsg();</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (msg_type == MsgType.RESPONSE_LOCATION) {</span>
+<span class="fc" id="L82">            data = Integer.parseInt(msg);</span>
+        }
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        else if(msg_type == MsgType.RESPONSE_STOCK){</span>
+<span class="fc" id="L85">            data = Integer.parseInt(msg);</span>
+        }
+<span class="fc" id="L87">        return data;</span>
+    }
+
+    private int handleLocationRequest(int src_id, int dst_id) {
+<span class="fc" id="L91">        int address = -1;</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        for(DVM dvm : dvmList){</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">            if(dvm.getId() == dst_id) {</span>
+<span class="fc" id="L94">                Message message = dvm.makeLocationResponseMessage(src_id);</span>
+<span class="fc" id="L95">                address = dvm.responseLocationMessage(this, message);</span>
+<span class="fc" id="L96">                break;</span>
+            }
+<span class="fc" id="L98">        }</span>
+<span class="fc" id="L99">        return address;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

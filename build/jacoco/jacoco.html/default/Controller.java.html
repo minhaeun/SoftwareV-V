@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Controller.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ctiptest</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Controller.java</span></div><h1>Controller.java</h1><pre class="source lang-java linenums">import java.util.ArrayList;
+
+public class Controller {
+<span class="fc" id="L4">    ArrayList&lt;Code&gt; code_list = new ArrayList&lt;Code&gt;();</span>
+    int currentDVMIndex;
+    ArrayList&lt;DVM&gt; accessible_DVM_list;
+    Card card_info;
+    OtherDVMs otherDVMs;
+    Drink selected_drink;
+<span class="fc" id="L10">    CardPayment cardPayment = new CardPayment();</span>
+<span class="fc" id="L11">    CodePayment codePayment = new CodePayment();</span>
+
+<span class="fc" id="L13">    Controller(){</span>
+<span class="fc" id="L14">        otherDVMs = new OtherDVMs();</span>
+<span class="fc" id="L15">    }</span>
+
+
+
+    int selectCurrentDrink(int dialNum) {
+<span class="nc" id="L20">        final int EMPTY_ALL_STOCK = 0; // 紐⑤뱺 DVM�쓽 �옱怨좉� 0�엫</span>
+<span class="nc" id="L21">        final int CUR_IN_STOCK = 1;    // �쁽�옱 DVM�뿉 �옱怨좉� �엳�쓬</span>
+<span class="nc" id="L22">        final int OTHER_IN_STOCK = 2;  // �떎瑜� DVM�뿉 �옱怨좉� �엳�쓬</span>
+<span class="nc" id="L23">        DVM currentDVM = otherDVMs.getDVM(currentDVMIndex);</span>
+<span class="nc" id="L24">        selected_drink = currentDVM.getDrink_list().get(dialNum - 1);   //selected_drink �씪�뒗 �쟾�뿭蹂��닔�뿉 ���옣</span>
+<span class="nc" id="L25">        boolean current_stock = otherDVMs.checkCurrentDVMsStock(selected_drink, currentDVM);</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">        if (current_stock) {</span>
+<span class="nc" id="L27">            return CUR_IN_STOCK;</span>
+        } else {
+<span class="nc" id="L29">            accessible_DVM_list = otherDVMs.checkOtherDVMsStock(selected_drink, currentDVM);</span>
+<span class="nc bnc" id="L30" title="All 4 branches missed.">            if (accessible_DVM_list == null || accessible_DVM_list.size() == 0)</span>
+<span class="nc" id="L31">                return EMPTY_ALL_STOCK;</span>
+            else
+<span class="nc" id="L33">                return OTHER_IN_STOCK;</span>
+        }
+    }
+
+    public int selectOtherDrink(int dialNum) {
+<span class="nc" id="L38">        final int EMPTY_ALL_STOCK = 0; // 紐⑤뱺 DVM�쓽 �옱怨좉� 0�엫</span>
+<span class="nc" id="L39">        final int CUR_IN_STOCK = 1;    // �쁽�옱 DVM�뿉 �옱怨좉� �엳�쓬</span>
+<span class="nc" id="L40">        final int OTHER_IN_STOCK = 2;  // �떎瑜� DVM�뿉 �옱怨좉� �엳�쓬</span>
+<span class="nc" id="L41">        DVM currentDVM = otherDVMs.getDVM(currentDVMIndex);</span>
+<span class="nc" id="L42">        selected_drink = currentDVM.getDrink_list().get(dialNum - 1);</span>
+<span class="nc" id="L43">        accessible_DVM_list = otherDVMs.checkOtherDVMsStock(selected_drink, currentDVM);</span>
+<span class="nc bnc" id="L44" title="All 4 branches missed.">        if (accessible_DVM_list == null || accessible_DVM_list.size() == 0)</span>
+<span class="nc" id="L45">            return EMPTY_ALL_STOCK;</span>
+        else
+<span class="nc" id="L47">            return OTHER_IN_STOCK;</span>
+    }
+
+    String insertCard(int card_num, boolean isPrepayment){
+<span class="nc" id="L51">        Boolean card_available = cardPayment.getCard_available(card_num);</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        if(!card_available){</span>
+<span class="nc" id="L53">            return &quot;not available card&quot;;</span>
+        }
+<span class="nc" id="L55">        Card card = cardPayment.getCard(card_num);</span>
+<span class="nc" id="L56">        int balance = card.getBalance();</span>
+<span class="nc" id="L57">        int price = selected_drink.getPrice();</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        if(balance &lt; price){</span>
+<span class="nc" id="L59">            return &quot;insufficient balance&quot;;</span>
+        }
+<span class="nc" id="L61">        card.updateBalance(price);</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        if(isPrepayment){</span>
+<span class="nc" id="L63">            Code code = cardPayment.generateCode(selected_drink); // 肄붾뱶 �깮�꽦</span>
+<span class="nc" id="L64">            addCode(code);</span>
+<span class="nc" id="L65">            DVM currentDVM = otherDVMs.getDVM(currentDVMIndex);</span>
+<span class="nc" id="L66">            String locationsListStr = otherDVMs.showAccessibleDVMsLocation(accessible_DVM_list, currentDVMIndex);</span>
+<span class="nc" id="L67">            String result = &quot;�꽑寃곗젣 吏꾪뻾 DVM: &quot; + (currentDVM.getId() + 1)</span>
+<span class="nc" id="L68">                    + &quot;\n�꽑寃곗젣�븳 �쓬猷뚯닔: &quot; + selected_drink.getName()</span>
+<span class="nc" id="L69">                    + &quot;\n�쓬猷� 媛�寃�: &quot; + selected_drink.getPrice()</span>
+<span class="nc" id="L70">                    + &quot;\n�꽑寃곗젣 �썑 移대뱶 �옍怨�: &quot; + card.getBalance() + &quot;�썝&quot;</span>
+<span class="nc" id="L71">                    + &quot;\n諛쒓툒 肄붾뱶: '&quot; + code.getCode() + &quot;'&quot;</span>
+                    + &quot;\n\n&lt;�빐�떦 �쓬猷� 援щℓ 媛��뒫 DVM 諛� DVM �쐞移�&gt;&quot;
+                    +&quot;\n &quot; + locationsListStr;
+<span class="nc" id="L74">            return result;</span>
+        }
+        else{
+<span class="nc" id="L77">            String result = otherDVMs.requestDrink(selected_drink, currentDVMIndex);</span>
+<span class="nc" id="L78">            String result2 = result + &quot;\n寃곗젣 �썑 移대뱶 �옍怨�: &quot; + card.getBalance() + &quot;�썝&quot;;</span>
+<span class="nc" id="L79">            return result2;</span>
+        }
+    }
+
+    private ArrayList&lt;Code&gt; addCode(Code code) {
+<span class="nc" id="L84">        code_list.add(code);</span>
+<span class="nc" id="L85">        return code_list;</span>
+    }
+
+    String enterCode(int code_num) {
+<span class="nc" id="L89">        Boolean codeAvailable = checkCodeAvailable(code_num);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if(!codeAvailable){</span>
+<span class="nc" id="L91">            return &quot;&quot;;</span>
+        }
+<span class="nc" id="L93">        Code code_info = getCodeInfo(code_num);</span>
+<span class="nc" id="L94">        Drink drink = codePayment.codePayment(code_info);</span>
+<span class="nc" id="L95">        String result = otherDVMs.requestDrink(drink, currentDVMIndex);</span>
+<span class="nc" id="L96">        deleteCode(code_info);</span>
+<span class="nc" id="L97">        String result2 = result + &quot;\n肄붾뱶 �젙蹂�: &quot; + code_info.getCode();</span>
+<span class="nc" id="L98">        return result2;</span>
+    }
+
+    Code getCodeInfo(int code_num) {
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        for(Code code : code_list){</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">            if(code.getCode() == code_num){</span>
+<span class="nc" id="L104">                return code;</span>
+            }
+<span class="nc" id="L106">        }</span>
+<span class="nc" id="L107">        return null;</span>
+    }
+
+    ArrayList&lt;Code&gt; deleteCode(Code code_info) {
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        code_list.removeIf(code -&gt; code.getCode() == code_info.getCode());</span>
+<span class="nc" id="L112">        return code_list;</span>
+    }
+
+    public Boolean checkCodeAvailable(int code_num) {
+<span class="nc bnc" id="L116" title="All 2 branches missed.">        for (Code code : code_list) {</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">            if (code_num == code.getCode()) {</span>
+<span class="nc" id="L118">                return true;</span>
+            }
+<span class="nc" id="L120">        }</span>
+<span class="nc" id="L121">        return false;</span>
+    }
+
+    public DVM selectDVM(int num) {
+<span class="nc" id="L125">        currentDVMIndex = num - 1;</span>
+<span class="nc" id="L126">        return otherDVMs.getDVM(num - 1);</span>
+    }
+
+
+    public ArrayList&lt;ArrayList&lt;Integer&gt;&gt; startService() {
+<span class="nc" id="L131">        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; result = new ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</span>
+<span class="nc" id="L132">        ArrayList&lt;DVM&gt; dvmList = otherDVMs.getDVMList();</span>
+
+<span class="nc bnc" id="L134" title="All 2 branches missed.">        for(int i=0; i&lt;dvmList.size(); i++){</span>
+<span class="nc" id="L135">            ArrayList&lt;Integer&gt; std = new ArrayList&lt;Integer&gt;();</span>
+<span class="nc" id="L136">            std.add(dvmList.get(i).getId());</span>
+<span class="nc" id="L137">            std.add(dvmList.get(i).getAddress());</span>
+<span class="nc" id="L138">            result.add(std);</span>
+
+        }
+
+<span class="nc" id="L142">        return result;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

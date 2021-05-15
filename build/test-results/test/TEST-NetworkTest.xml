@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="NetworkTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2021-05-15T12:16:48" hostname="DESKTOP-N5AKV6O" time="0.006">
+  <properties/>
+  <testcase name="responseNormalMessageTest()" classname="NetworkTest" time="0.001"/>
+  <testcase name="responseBroadcastMessageTest()" classname="NetworkTest" time="0.0"/>
+  <testcase name="handleRequestMessageTest()" classname="NetworkTest" time="0.002"/>
+  <system-out><![CDATA[ResponseBroadCastMessage == src_id: 2, dst_id: 2, msg_type: 2, msg: 3
+ResponseBroadCastMessage == src_id: 1, dst_id: 1, msg_type: 2, msg: 3
+ResponseBroadCastMessage == src_id: 2, dst_id: 2, msg_type: 2, msg: 3
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

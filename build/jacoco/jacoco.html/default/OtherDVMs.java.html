@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OtherDVMs.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ctiptest</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">OtherDVMs.java</span></div><h1>OtherDVMs.java</h1><pre class="source lang-java linenums">import java.util.ArrayList;
+import java.util.Arrays;
+
+public class OtherDVMs {
+<span class="fc" id="L5">    ArrayList&lt;DVM&gt; dvmList =new ArrayList&lt;DVM&gt;();</span>
+    Network network;
+
+
+<span class="fc" id="L9">    OtherDVMs(){</span>
+<span class="fc" id="L10">        init();</span>
+<span class="fc" id="L11">    }</span>
+
+    DVM getDVM(int index){
+<span class="fc" id="L14">        return dvmList.get(index);</span>
+    }
+
+<span class="fc" id="L17">    public ArrayList&lt;DVM&gt; getDVMList(){return dvmList;}</span>
+
+
+    public boolean checkCurrentDVMsStock(Drink selectedDrink, DVM currentDVM) {
+<span class="fc" id="L21">        ArrayList&lt;Drink&gt; drink_list = currentDVM.getDrink_list();</span>
+<span class="fc" id="L22">        int dvmStock = 0;</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">        for(int i = 0; i &lt; drink_list.size(); i++){</span>
+<span class="pc bpc" id="L24" title="1 of 2 branches missed.">            if(drink_list.get(i).getName().equals(selectedDrink.getName())){</span>
+<span class="nc" id="L25">                dvmStock = drink_list.get(i).getStock();</span>
+            }
+        }
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">        if(dvmStock &gt; 0)</span>
+<span class="nc" id="L29">            return true;</span>
+        else
+<span class="fc" id="L31">            return false;</span>
+    }
+
+    ArrayList&lt;DVM&gt; checkOtherDVMsStock(Drink drink_info, DVM currentDVM){
+<span class="fc" id="L35">        Message stockBroadCastMessage = currentDVM.makeStockRequestMessage(0, drink_info.getName());</span>
+<span class="fc" id="L36">        ArrayList&lt;DVM&gt; accessible_DVM_list = (ArrayList&lt;DVM&gt;) currentDVM.requestStockMessage(network, stockBroadCastMessage);</span>
+
+<span class="fc" id="L38">        return accessible_DVM_list;</span>
+    }
+
+    public String requestDrink(Drink selected_drink, int currentDVMIndex) {
+<span class="fc" id="L42">        dvmList.get(currentDVMIndex).updateStock(selected_drink);</span>
+<span class="fc" id="L43">        String result = &quot;       &lt;�쓬猷� 援щℓ �셿猷�&gt;&quot; +</span>
+<span class="fc" id="L44">                &quot;\n援щℓ 吏꾪뻾�븳 DVM: DVM&quot; + String.valueOf(currentDVMIndex + 1)</span>
+<span class="fc" id="L45">                + &quot;\n援щℓ�븳 �쓬猷�: &quot;+ selected_drink.getName()</span>
+<span class="fc" id="L46">                + &quot;\n�쓬猷� 媛�寃�: &quot; + selected_drink.getPrice() + &quot;�썝&quot;;</span>
+<span class="fc" id="L47">        return result;</span>
+    }
+
+    String showAccessibleDVMsLocation(ArrayList&lt;DVM&gt; accessibleDVMList, int currentDVMIndex){
+<span class="fc" id="L51">        ArrayList&lt;Integer&gt; dvmLocationList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        for(int i = 0; i &lt; accessibleDVMList.size(); i++){</span>
+<span class="fc" id="L53">            DVM currentDVM = getDVM(currentDVMIndex);</span>
+<span class="fc" id="L54">            Message locationRequestMessage = currentDVM.makeLocationRequestMessage(accessibleDVMList.get(i).getId());</span>
+<span class="fc" id="L55">            int address = currentDVM.requestLocationMessage(network, locationRequestMessage);</span>
+<span class="fc" id="L56">            dvmLocationList.add(address);</span>
+        }
+<span class="fc" id="L58">        StringBuilder locationListStr = new StringBuilder();</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        for(int i = 0; i &lt; accessibleDVMList.size(); i++){</span>
+<span class="fc" id="L60">            locationListStr.append(&quot;DVM 紐�: DVM&quot;).append((accessibleDVMList.get(i).getId() + 1)).append(&quot; / �쐞移�: &quot;).append(dvmLocationList.get(i)).append(&quot;\n&quot;);</span>
+        }
+<span class="fc" id="L62">        return String.valueOf(locationListStr);</span>
+    }
+
+    private void init() {
+<span class="fc" id="L66">        ArrayList&lt;Drink&gt; drinkArrayList = new ArrayList&lt;&gt;(); // �쟾泥� �쓬猷뚯닔 由ъ뒪�듃</span>
+<span class="fc" id="L67">        drinkArrayList.add(new Drink(&quot;肄붿뭅肄쒕씪&quot;, 1500, 10, &quot;src/main/resources/image/1.jpg&quot;));</span>
+<span class="fc" id="L68">        drinkArrayList.add(new Drink(&quot;�렔�떆肄쒕씪&quot;, 1500, 11, &quot;src/main/resources/image/2.jpg&quot;));</span>
+<span class="fc" id="L69">        drinkArrayList.add(new Drink(&quot;移좎꽦�궗�씠�떎&quot;, 1500, 0, &quot;src/main/resources/image/3.jpg&quot;));</span>
+<span class="fc" id="L70">        drinkArrayList.add(new Drink(&quot;�뒪�봽�씪�씠�듃&quot;, 1500, 10, &quot;src/main/resources/image/4.jpg&quot;));</span>
+<span class="fc" id="L71">        drinkArrayList.add(new Drink(&quot;�솚���삤�젋吏�&quot;, 1500, 8, &quot;src/main/resources/image/5.jpg&quot;));</span>
+<span class="fc" id="L72">        drinkArrayList.add(new Drink(&quot;�솚���룷�룄&quot;, 1500, 1, &quot;src/main/resources/image/6.jpg&quot;));</span>
+<span class="fc" id="L73">        drinkArrayList.add(new Drink(&quot;�빂�떇�뒪&quot;, 1500, 10, &quot;src/main/resources/image/7.jpg&quot;));</span>
+<span class="fc" id="L74">        drinkArrayList.add(new Drink(&quot;�젅�뱶遺�&quot;, 1500, 0, &quot;src/main/resources/image/8.jpg&quot;));</span>
+<span class="fc" id="L75">        drinkArrayList.add(new Drink(&quot;紐ъ뒪�꽣�뱶留곹겕&quot;, 1500, 0, &quot;src/main/resources/image/9.jpg&quot;));</span>
+<span class="fc" id="L76">        drinkArrayList.add(new Drink(&quot;鍮≫뀗�뀡&quot;, 1500, 0, &quot;src/main/resources/image/10.jpg&quot;));</span>
+<span class="fc" id="L77">        drinkArrayList.add(new Drink(&quot;�룷移대━�뒪�썾�듃&quot;, 1500, 0, &quot;src/main/resources/image/11.jpg&quot;));</span>
+<span class="fc" id="L78">        drinkArrayList.add(new Drink(&quot;寃뚰넗�젅�씠&quot;, 1500, 0, &quot;src/main/resources/image/12.jpg&quot;));</span>
+<span class="fc" id="L79">        drinkArrayList.add(new Drink(&quot;�뙆�썙�뿉�씠�뱶&quot;, 1500, 0, &quot;src/main/resources/image/13.jpg&quot;));</span>
+<span class="fc" id="L80">        drinkArrayList.add(new Drink(&quot;諛��궎�뒪&quot;, 1500, 0, &quot;src/main/resources/image/14.jpg&quot;));</span>
+<span class="fc" id="L81">        drinkArrayList.add(new Drink(&quot;�젅�벐鍮�&quot;, 1500, 0, &quot;src/main/resources/image/15.jpg&quot;));</span>
+<span class="fc" id="L82">        drinkArrayList.add(new Drink(&quot;�뒪�뙆�겢留�&quot;, 1500, 0, &quot;src/main/resources/image/16.jpg&quot;));</span>
+<span class="fc" id="L83">        drinkArrayList.add(new Drink(&quot;鍮꾨씫�떇�삙&quot;, 1500, 0, &quot;src/main/resources/image/17.jpg&quot;));</span>
+<span class="fc" id="L84">        drinkArrayList.add(new Drink(&quot;�넄�쓽�늿&quot;, 1500, 0, &quot;src/main/resources/image/18.jpg&quot;));</span>
+<span class="fc" id="L85">        drinkArrayList.add(new Drink(&quot;�뜲�옄��&quot;, 1500, 0, &quot;src/main/resources/image/19.jpg&quot;));</span>
+<span class="fc" id="L86">        drinkArrayList.add(new Drink(&quot;留덉슫�떞��&quot;, 1500, 0, &quot;src/main/resources/image/20.jpg&quot;));</span>
+
+<span class="fc" id="L88">        ArrayList&lt;Drink&gt; drinkArrayList2 = new ArrayList&lt;&gt;(); // �쟾泥� �쓬猷뚯닔 由ъ뒪�듃</span>
+<span class="fc" id="L89">        drinkArrayList2.add(new Drink(&quot;鍮≫뀗�뀡&quot;, 1500, 10, &quot;src/main/resources/image/10.jpg&quot;));</span>
+<span class="fc" id="L90">        drinkArrayList2.add(new Drink(&quot;�뙆�썙�뿉�씠�뱶&quot;, 1500, 120, &quot;src/main/resources/image/13.jpg&quot;));</span>
+<span class="fc" id="L91">        drinkArrayList2.add(new Drink(&quot;諛��궎�뒪&quot;, 1500, 10, &quot;src/main/resources/image/14.jpg&quot;));</span>
+<span class="fc" id="L92">        drinkArrayList2.add(new Drink(&quot;�젅�벐鍮�&quot;, 1500, 12, &quot;src/main/resources/image/15.jpg&quot;));</span>
+<span class="fc" id="L93">        drinkArrayList2.add(new Drink(&quot;�뒪�뙆�겢留�&quot;, 1500, 0, &quot;src/main/resources/image/16.jpg&quot;));</span>
+<span class="fc" id="L94">        drinkArrayList2.add(new Drink(&quot;�뜲�옄��&quot;, 1500, 10, &quot;src/main/resources/image/19.jpg&quot;));</span>
+<span class="fc" id="L95">        drinkArrayList2.add(new Drink(&quot;肄붿뭅肄쒕씪&quot;, 1500, 10, &quot;src/main/resources/image/1.jpg&quot;));</span>
+<span class="fc" id="L96">        drinkArrayList2.add(new Drink(&quot;�렔�떆肄쒕씪&quot;, 1500, 0, &quot;src/main/resources/image/2.jpg&quot;));</span>
+<span class="fc" id="L97">        drinkArrayList2.add(new Drink(&quot;移좎꽦�궗�씠�떎&quot;, 1500, 0, &quot;src/main/resources/image/3.jpg&quot;));</span>
+<span class="fc" id="L98">        drinkArrayList2.add(new Drink(&quot;�뒪�봽�씪�씠�듃&quot;, 1500, 0, &quot;src/main/resources/image/4.jpg&quot;));</span>
+<span class="fc" id="L99">        drinkArrayList2.add(new Drink(&quot;�솚���삤�젋吏�&quot;, 1500, 0, &quot;src/main/resources/image/5.jpg&quot;));</span>
+<span class="fc" id="L100">        drinkArrayList2.add(new Drink(&quot;�솚���룷�룄&quot;, 1500, 0, &quot;src/main/resources/image/6.jpg&quot;));</span>
+<span class="fc" id="L101">        drinkArrayList2.add(new Drink(&quot;�빂�떇�뒪&quot;, 1500, 0, &quot;src/main/resources/image/7.jpg&quot;));</span>
+<span class="fc" id="L102">        drinkArrayList2.add(new Drink(&quot;�젅�뱶遺�&quot;, 1500, 0, &quot;src/main/resources/image/8.jpg&quot;));</span>
+<span class="fc" id="L103">        drinkArrayList2.add(new Drink(&quot;紐ъ뒪�꽣�뱶留곹겕&quot;, 1500, 0, &quot;src/main/resources/image/9.jpg&quot;));</span>
+<span class="fc" id="L104">        drinkArrayList2.add(new Drink(&quot;�룷移대━�뒪�썾�듃&quot;, 1500, 0, &quot;src/main/resources/image/11.jpg&quot;));</span>
+<span class="fc" id="L105">        drinkArrayList2.add(new Drink(&quot;寃뚰넗�젅�씠&quot;, 1500, 0, &quot;src/main/resources/image/12.jpg&quot;));</span>
+<span class="fc" id="L106">        drinkArrayList2.add(new Drink(&quot;鍮꾨씫�떇�삙&quot;, 1500, 0, &quot;src/main/resources/image/17.jpg&quot;));</span>
+<span class="fc" id="L107">        drinkArrayList2.add(new Drink(&quot;�넄�쓽�늿&quot;, 1500, 0, &quot;src/main/resources/image/18.jpg&quot;));</span>
+<span class="fc" id="L108">        drinkArrayList2.add(new Drink(&quot;留덉슫�떞��&quot;, 1500, 0, &quot;src/main/resources/image/20.jpg&quot;));</span>
+
+<span class="fc" id="L110">        ArrayList&lt;Drink&gt; drinkArrayList3 = new ArrayList&lt;&gt;(); // �쟾泥� �쓬猷뚯닔 由ъ뒪�듃</span>
+<span class="fc" id="L111">        drinkArrayList3.add(new Drink(&quot;�솚���삤�젋吏�&quot;, 1500, 10, &quot;src/main/resources/image/5.jpg&quot;));</span>
+<span class="fc" id="L112">        drinkArrayList3.add(new Drink(&quot;�룷移대━�뒪�썾�듃&quot;, 1500, 10, &quot;src/main/resources/image/11.jpg&quot;));</span>
+<span class="fc" id="L113">        drinkArrayList3.add(new Drink(&quot;�젅�뱶遺�&quot;, 1500, 0, &quot;src/main/resources/image/8.jpg&quot;));</span>
+<span class="fc" id="L114">        drinkArrayList3.add(new Drink(&quot;鍮≫뀗�뀡&quot;, 1500, 13, &quot;src/main/resources/image/10.jpg&quot;));</span>
+<span class="fc" id="L115">        drinkArrayList3.add(new Drink(&quot;�뙆�썙�뿉�씠�뱶&quot;, 1500, 10, &quot;src/main/resources/image/13.jpg&quot;));</span>
+<span class="fc" id="L116">        drinkArrayList3.add(new Drink(&quot;諛��궎�뒪&quot;, 1500, 10, &quot;src/main/resources/image/14.jpg&quot;));</span>
+<span class="fc" id="L117">        drinkArrayList3.add(new Drink(&quot;寃뚰넗�젅�씠&quot;, 1500, 20, &quot;src/main/resources/image/12.jpg&quot;));</span>
+<span class="fc" id="L118">        drinkArrayList3.add(new Drink(&quot;鍮꾨씫�떇�삙&quot;, 1500, 0, &quot;src/main/resources/image/17.jpg&quot;));</span>
+<span class="fc" id="L119">        drinkArrayList3.add(new Drink(&quot;�넄�쓽�늿&quot;, 1500, 0, &quot;src/main/resources/image/18.jpg&quot;));</span>
+<span class="fc" id="L120">        drinkArrayList3.add(new Drink(&quot;�젅�벐鍮�&quot;, 1500, 0, &quot;src/main/resources/image/15.jpg&quot;));</span>
+<span class="fc" id="L121">        drinkArrayList3.add(new Drink(&quot;�뒪�뙆�겢留�&quot;, 1500, 0, &quot;src/main/resources/image/16.jpg&quot;));</span>
+<span class="fc" id="L122">        drinkArrayList3.add(new Drink(&quot;�뜲�옄��&quot;, 1500, 0, &quot;src/main/resources/image/19.jpg&quot;));</span>
+<span class="fc" id="L123">        drinkArrayList3.add(new Drink(&quot;肄붿뭅肄쒕씪&quot;, 1500, 0, &quot;src/main/resources/image/1.jpg&quot;));</span>
+<span class="fc" id="L124">        drinkArrayList3.add(new Drink(&quot;�렔�떆肄쒕씪&quot;, 1500, 0, &quot;src/main/resources/image/2.jpg&quot;));</span>
+<span class="fc" id="L125">        drinkArrayList3.add(new Drink(&quot;移좎꽦�궗�씠�떎&quot;, 1500, 0, &quot;src/main/resources/image/3.jpg&quot;));</span>
+<span class="fc" id="L126">        drinkArrayList3.add(new Drink(&quot;�뒪�봽�씪�씠�듃&quot;, 1500, 0, &quot;src/main/resources/image/4.jpg&quot;));</span>
+<span class="fc" id="L127">        drinkArrayList3.add(new Drink(&quot;�솚���룷�룄&quot;, 1500, 0, &quot;src/main/resources/image/6.jpg&quot;));</span>
+<span class="fc" id="L128">        drinkArrayList3.add(new Drink(&quot;�빂�떇�뒪&quot;, 1500, 0, &quot;src/main/resources/image/7.jpg&quot;));</span>
+<span class="fc" id="L129">        drinkArrayList3.add(new Drink(&quot;紐ъ뒪�꽣�뱶留곹겕&quot;, 1500, 0, &quot;src/main/resources/image/9.jpg&quot;));</span>
+<span class="fc" id="L130">        drinkArrayList3.add(new Drink(&quot;留덉슫�떞��&quot;, 1500, 0, &quot;src/main/resources/image/20.jpg&quot;));</span>
+
+<span class="fc" id="L132">        ArrayList&lt;Drink&gt; drinkArrayList4 = new ArrayList&lt;&gt;(); // �쟾泥� �쓬猷뚯닔 由ъ뒪�듃</span>
+<span class="fc" id="L133">        drinkArrayList4.add(new Drink(&quot;�렔�떆肄쒕씪&quot;, 1500, 11, &quot;src/main/resources/image/2.jpg&quot;));</span>
+<span class="fc" id="L134">        drinkArrayList4.add(new Drink(&quot;移좎꽦�궗�씠�떎&quot;, 1500, 4, &quot;src/main/resources/image/3.jpg&quot;));</span>
+<span class="fc" id="L135">        drinkArrayList4.add(new Drink(&quot;�뒪�봽�씪�씠�듃&quot;, 1500, 8, &quot;src/main/resources/image/4.jpg&quot;));</span>
+<span class="fc" id="L136">        drinkArrayList4.add(new Drink(&quot;�솚���삤�젋吏�&quot;, 1500, 10, &quot;src/main/resources/image/5.jpg&quot;));</span>
+<span class="fc" id="L137">        drinkArrayList4.add(new Drink(&quot;�룷移대━�뒪�썾�듃&quot;, 1500, 10, &quot;src/main/resources/image/11.jpg&quot;));</span>
+<span class="fc" id="L138">        drinkArrayList4.add(new Drink(&quot;�뒪�뙆�겢留�&quot;, 1500, 4, &quot;src/main/resources/image/16.jpg&quot;));</span>
+<span class="fc" id="L139">        drinkArrayList4.add(new Drink(&quot;寃뚰넗�젅�씠&quot;, 1500, 21, &quot;src/main/resources/image/12.jpg&quot;));</span>
+<span class="fc" id="L140">        drinkArrayList4.add(new Drink(&quot;鍮꾨씫�떇�삙&quot;, 1500, 0, &quot;src/main/resources/image/17.jpg&quot;));</span>
+<span class="fc" id="L141">        drinkArrayList4.add(new Drink(&quot;�넄�쓽�늿&quot;, 1500, 0, &quot;src/main/resources/image/18.jpg&quot;));</span>
+<span class="fc" id="L142">        drinkArrayList4.add(new Drink(&quot;�젅�벐鍮�&quot;, 1500, 0, &quot;src/main/resources/image/15.jpg&quot;));</span>
+<span class="fc" id="L143">        drinkArrayList4.add(new Drink(&quot;�뜲�옄��&quot;, 1500, 0, &quot;src/main/resources/image/19.jpg&quot;));</span>
+<span class="fc" id="L144">        drinkArrayList4.add(new Drink(&quot;肄붿뭅肄쒕씪&quot;, 1500, 0, &quot;src/main/resources/image/1.jpg&quot;));</span>
+<span class="fc" id="L145">        drinkArrayList4.add(new Drink(&quot;�솚���룷�룄&quot;, 1500, 0, &quot;src/main/resources/image/6.jpg&quot;));</span>
+<span class="fc" id="L146">        drinkArrayList4.add(new Drink(&quot;�빂�떇�뒪&quot;, 1500, 0, &quot;src/main/resources/image/7.jpg&quot;));</span>
+<span class="fc" id="L147">        drinkArrayList4.add(new Drink(&quot;紐ъ뒪�꽣�뱶留곹겕&quot;, 1500, 0, &quot;src/main/resources/image/9.jpg&quot;));</span>
+<span class="fc" id="L148">        drinkArrayList4.add(new Drink(&quot;留덉슫�떞��&quot;, 1500, 0, &quot;src/main/resources/image/20.jpg&quot;));</span>
+<span class="fc" id="L149">        drinkArrayList4.add(new Drink(&quot;諛��궎�뒪&quot;, 1500, 0, &quot;src/main/resources/image/14.jpg&quot;));</span>
+<span class="fc" id="L150">        drinkArrayList4.add(new Drink(&quot;�젅�뱶遺�&quot;, 1500, 0, &quot;src/main/resources/image/8.jpg&quot;));</span>
+<span class="fc" id="L151">        drinkArrayList4.add(new Drink(&quot;鍮≫뀗�뀡&quot;, 1500, 0, &quot;src/main/resources/image/10.jpg&quot;));</span>
+<span class="fc" id="L152">        drinkArrayList4.add(new Drink(&quot;�뙆�썙�뿉�씠�뱶&quot;, 1500, 0, &quot;src/main/resources/image/13.jpg&quot;));</span>
+
+<span class="fc" id="L154">        ArrayList&lt;Drink&gt; drinkArrayList5 = new ArrayList&lt;&gt;(); // �쟾泥� �쓬猷뚯닔 由ъ뒪�듃</span>
+<span class="fc" id="L155">        drinkArrayList5.add(new Drink(&quot;�젅�벐鍮�&quot;, 1500, 12, &quot;src/main/resources/image/15.jpg&quot;));</span>
+<span class="fc" id="L156">        drinkArrayList5.add(new Drink(&quot;�렔�떆肄쒕씪&quot;, 1500, 32, &quot;src/main/resources/image/2.jpg&quot;));</span>
+<span class="fc" id="L157">        drinkArrayList5.add(new Drink(&quot;移좎꽦�궗�씠�떎&quot;, 1500, 1, &quot;src/main/resources/image/3.jpg&quot;));</span>
+<span class="fc" id="L158">        drinkArrayList5.add(new Drink(&quot;留덉슫�떞��&quot;, 1500, 23, &quot;src/main/resources/image/20.jpg&quot;));</span>
+<span class="fc" id="L159">        drinkArrayList5.add(new Drink(&quot;諛��궎�뒪&quot;, 1500, 5, &quot;src/main/resources/image/14.jpg&quot;));</span>
+<span class="fc" id="L160">        drinkArrayList5.add(new Drink(&quot;�뒪�봽�씪�씠�듃&quot;, 1500, 7, &quot;src/main/resources/image/4.jpg&quot;));</span>
+<span class="fc" id="L161">        drinkArrayList5.add(new Drink(&quot;�솚���삤�젋吏�&quot;, 1500, 10, &quot;src/main/resources/image/5.jpg&quot;));</span>
+<span class="fc" id="L162">        drinkArrayList5.add(new Drink(&quot;�뜲�옄��&quot;, 1500, 0, &quot;src/main/resources/image/19.jpg&quot;));</span>
+<span class="fc" id="L163">        drinkArrayList5.add(new Drink(&quot;肄붿뭅肄쒕씪&quot;, 1500, 0, &quot;src/main/resources/image/1.jpg&quot;));</span>
+<span class="fc" id="L164">        drinkArrayList5.add(new Drink(&quot;�룷移대━�뒪�썾�듃&quot;, 1500, 0, &quot;src/main/resources/image/11.jpg&quot;));</span>
+<span class="fc" id="L165">        drinkArrayList5.add(new Drink(&quot;�뒪�뙆�겢留�&quot;, 1500, 0, &quot;src/main/resources/image/16.jpg&quot;));</span>
+<span class="fc" id="L166">        drinkArrayList5.add(new Drink(&quot;寃뚰넗�젅�씠&quot;, 1500, 0, &quot;src/main/resources/image/12.jpg&quot;));</span>
+<span class="fc" id="L167">        drinkArrayList5.add(new Drink(&quot;鍮꾨씫�떇�삙&quot;, 1500, 0, &quot;src/main/resources/image/17.jpg&quot;));</span>
+<span class="fc" id="L168">        drinkArrayList5.add(new Drink(&quot;�넄�쓽�늿&quot;, 1500, 0, &quot;src/main/resources/image/18.jpg&quot;));</span>
+<span class="fc" id="L169">        drinkArrayList5.add(new Drink(&quot;�솚���룷�룄&quot;, 1500, 0, &quot;src/main/resources/image/6.jpg&quot;));</span>
+<span class="fc" id="L170">        drinkArrayList5.add(new Drink(&quot;�빂�떇�뒪&quot;, 1500, 0, &quot;src/main/resources/image/7.jpg&quot;));</span>
+<span class="fc" id="L171">        drinkArrayList5.add(new Drink(&quot;紐ъ뒪�꽣�뱶留곹겕&quot;, 1500, 0, &quot;src/main/resources/image/9.jpg&quot;));</span>
+<span class="fc" id="L172">        drinkArrayList5.add(new Drink(&quot;�젅�뱶遺�&quot;, 1500, 0, &quot;src/main/resources/image/8.jpg&quot;));</span>
+<span class="fc" id="L173">        drinkArrayList5.add(new Drink(&quot;鍮≫뀗�뀡&quot;, 1500, 0, &quot;src/main/resources/image/10.jpg&quot;));</span>
+<span class="fc" id="L174">        drinkArrayList5.add(new Drink(&quot;�뙆�썙�뿉�씠�뱶&quot;, 1500, 0, &quot;src/main/resources/image/13.jpg&quot;));</span>
+
+<span class="fc" id="L176">        ArrayList&lt;Drink&gt; drinkArrayList6 = new ArrayList&lt;&gt;(); // �쟾泥� �쓬猷뚯닔 由ъ뒪�듃</span>
+<span class="fc" id="L177">        drinkArrayList6.add(new Drink(&quot;�뒪�뙆�겢留�&quot;, 1500, 9, &quot;src/main/resources/image/16.jpg&quot;));</span>
+<span class="fc" id="L178">        drinkArrayList6.add(new Drink(&quot;�젅�뱶遺�&quot;, 1500, 5, &quot;src/main/resources/image/8.jpg&quot;));</span>
+<span class="fc" id="L179">        drinkArrayList6.add(new Drink(&quot;鍮≫뀗�뀡&quot;, 1500, 10, &quot;src/main/resources/image/10.jpg&quot;));</span>
+<span class="fc" id="L180">        drinkArrayList6.add(new Drink(&quot;肄붿뭅肄쒕씪&quot;, 1500, 130, &quot;src/main/resources/image/1.jpg&quot;));</span>
+<span class="fc" id="L181">        drinkArrayList6.add(new Drink(&quot;�뒪�봽�씪�씠�듃&quot;, 1500, 22, &quot;src/main/resources/image/4.jpg&quot;));</span>
+<span class="fc" id="L182">        drinkArrayList6.add(new Drink(&quot;�솚���삤�젋吏�&quot;, 1500, 10, &quot;src/main/resources/image/5.jpg&quot;));</span>
+<span class="fc" id="L183">        drinkArrayList6.add(new Drink(&quot;�룷移대━�뒪�썾�듃&quot;, 1500, 10, &quot;src/main/resources/image/11.jpg&quot;));</span>
+<span class="fc" id="L184">        drinkArrayList6.add(new Drink(&quot;寃뚰넗�젅�씠&quot;, 1500, 0, &quot;src/main/resources/image/12.jpg&quot;));</span>
+<span class="fc" id="L185">        drinkArrayList6.add(new Drink(&quot;鍮꾨씫�떇�삙&quot;, 1500, 0, &quot;src/main/resources/image/17.jpg&quot;));</span>
+<span class="fc" id="L186">        drinkArrayList6.add(new Drink(&quot;�넄�쓽�늿&quot;, 1500, 0, &quot;src/main/resources/image/18.jpg&quot;));</span>
+<span class="fc" id="L187">        drinkArrayList6.add(new Drink(&quot;�렔�떆肄쒕씪&quot;, 1500, 0, &quot;src/main/resources/image/2.jpg&quot;));</span>
+<span class="fc" id="L188">        drinkArrayList6.add(new Drink(&quot;移좎꽦�궗�씠�떎&quot;, 1500, 0, &quot;src/main/resources/image/3.jpg&quot;));</span>
+<span class="fc" id="L189">        drinkArrayList6.add(new Drink(&quot;�젅�벐鍮�&quot;, 1500, 0, &quot;src/main/resources/image/15.jpg&quot;));</span>
+<span class="fc" id="L190">        drinkArrayList6.add(new Drink(&quot;�뜲�옄��&quot;, 1500, 0, &quot;src/main/resources/image/19.jpg&quot;));</span>
+<span class="fc" id="L191">        drinkArrayList6.add(new Drink(&quot;�솚���룷�룄&quot;, 1500, 0, &quot;src/main/resources/image/6.jpg&quot;));</span>
+<span class="fc" id="L192">        drinkArrayList6.add(new Drink(&quot;�빂�떇�뒪&quot;, 1500, 0, &quot;src/main/resources/image/7.jpg&quot;));</span>
+<span class="fc" id="L193">        drinkArrayList6.add(new Drink(&quot;紐ъ뒪�꽣�뱶留곹겕&quot;, 1500, 0, &quot;src/main/resources/image/9.jpg&quot;));</span>
+<span class="fc" id="L194">        drinkArrayList6.add(new Drink(&quot;留덉슫�떞��&quot;, 1500, 0, &quot;src/main/resources/image/20.jpg&quot;));</span>
+<span class="fc" id="L195">        drinkArrayList6.add(new Drink(&quot;諛��궎�뒪&quot;, 1500, 0, &quot;src/main/resources/image/14.jpg&quot;));</span>
+
+<span class="fc" id="L197">        drinkArrayList6.add(new Drink(&quot;�뙆�썙�뿉�씠�뱶&quot;, 1500, 0, &quot;src/main/resources/image/13.jpg&quot;));</span>
+
+<span class="fc" id="L199">        ArrayList&lt;Drink&gt; drinkArrayList7 = new ArrayList&lt;&gt;(); // �쟾泥� �쓬猷뚯닔 由ъ뒪�듃</span>
+<span class="fc" id="L200">        drinkArrayList7.add(new Drink(&quot;�빂�떇�뒪&quot;, 1500, 12, &quot;src/main/resources/image/7.jpg&quot;));</span>
+<span class="fc" id="L201">        drinkArrayList7.add(new Drink(&quot;紐ъ뒪�꽣�뱶留곹겕&quot;, 1500, 32, &quot;src/main/resources/image/9.jpg&quot;));</span>
+<span class="fc" id="L202">        drinkArrayList7.add(new Drink(&quot;�뙆�썙�뿉�씠�뱶&quot;, 1500, 7, &quot;src/main/resources/image/13.jpg&quot;));</span>
+<span class="fc" id="L203">        drinkArrayList7.add(new Drink(&quot;�렔�떆肄쒕씪&quot;, 1500, 5, &quot;src/main/resources/image/2.jpg&quot;));</span>
+<span class="fc" id="L204">        drinkArrayList7.add(new Drink(&quot;寃뚰넗�젅�씠&quot;, 1500, 20, &quot;src/main/resources/image/12.jpg&quot;));</span>
+<span class="fc" id="L205">        drinkArrayList7.add(new Drink(&quot;鍮꾨씫�떇�삙&quot;, 1500, 0, &quot;src/main/resources/image/17.jpg&quot;));</span>
+<span class="fc" id="L206">        drinkArrayList7.add(new Drink(&quot;�솚���삤�젋吏�&quot;, 1500, 10, &quot;src/main/resources/image/5.jpg&quot;));</span>
+<span class="fc" id="L207">        drinkArrayList7.add(new Drink(&quot;�룷移대━�뒪�썾�듃&quot;, 1500, 0, &quot;src/main/resources/image/11.jpg&quot;));</span>
+<span class="fc" id="L208">        drinkArrayList7.add(new Drink(&quot;�뒪�뙆�겢留�&quot;, 1500, 0, &quot;src/main/resources/image/16.jpg&quot;));</span>
+<span class="fc" id="L209">        drinkArrayList7.add(new Drink(&quot;�뜲�옄��&quot;, 1500, 0, &quot;src/main/resources/image/19.jpg&quot;));</span>
+<span class="fc" id="L210">        drinkArrayList7.add(new Drink(&quot;�넄�쓽�늿&quot;, 1500, 0, &quot;src/main/resources/image/18.jpg&quot;));</span>
+<span class="fc" id="L211">        drinkArrayList7.add(new Drink(&quot;�젅�벐鍮�&quot;, 1500, 0, &quot;src/main/resources/image/15.jpg&quot;));</span>
+<span class="fc" id="L212">        drinkArrayList7.add(new Drink(&quot;肄붿뭅肄쒕씪&quot;, 1500, 0, &quot;src/main/resources/image/1.jpg&quot;));</span>
+<span class="fc" id="L213">        drinkArrayList7.add(new Drink(&quot;�솚���룷�룄&quot;, 1500, 0, &quot;src/main/resources/image/6.jpg&quot;));</span>
+<span class="fc" id="L214">        drinkArrayList7.add(new Drink(&quot;留덉슫�떞��&quot;, 1500, 0, &quot;src/main/resources/image/20.jpg&quot;));</span>
+<span class="fc" id="L215">        drinkArrayList7.add(new Drink(&quot;鍮≫뀗�뀡&quot;, 1500, 0, &quot;src/main/resources/image/10.jpg&quot;));</span>
+<span class="fc" id="L216">        drinkArrayList7.add(new Drink(&quot;諛��궎�뒪&quot;, 1500, 0, &quot;src/main/resources/image/14.jpg&quot;));</span>
+<span class="fc" id="L217">        drinkArrayList7.add(new Drink(&quot;�젅�뱶遺�&quot;, 1500, 0, &quot;src/main/resources/image/8.jpg&quot;));</span>
+<span class="fc" id="L218">        drinkArrayList7.add(new Drink(&quot;移좎꽦�궗�씠�떎&quot;, 1500, 0, &quot;src/main/resources/image/3.jpg&quot;));</span>
+<span class="fc" id="L219">        drinkArrayList7.add(new Drink(&quot;�뒪�봽�씪�씠�듃&quot;, 1500, 0, &quot;src/main/resources/image/4.jpg&quot;));</span>
+
+
+<span class="fc" id="L222">        ArrayList&lt;Drink&gt; drinkArrayList8 = new ArrayList&lt;&gt;(); // �쟾泥� �쓬猷뚯닔 由ъ뒪�듃</span>
+
+<span class="fc" id="L224">        drinkArrayList8.add(new Drink(&quot;�젅�뱶遺�&quot;, 1500, 20, &quot;src/main/resources/image/8.jpg&quot;));</span>
+<span class="fc" id="L225">        drinkArrayList8.add(new Drink(&quot;鍮≫뀗�뀡&quot;, 1500, 1, &quot;src/main/resources/image/10.jpg&quot;));</span>
+<span class="fc" id="L226">        drinkArrayList8.add(new Drink(&quot;�넄�쓽�늿&quot;, 1500, 2, &quot;src/main/resources/image/18.jpg&quot;));</span>
+<span class="fc" id="L227">        drinkArrayList8.add(new Drink(&quot;�젅�벐鍮�&quot;, 1500, 0, &quot;src/main/resources/image/15.jpg&quot;));</span>
+<span class="fc" id="L228">        drinkArrayList8.add(new Drink(&quot;�뜲�옄��&quot;, 1500, 6, &quot;src/main/resources/image/19.jpg&quot;));</span>
+<span class="fc" id="L229">        drinkArrayList8.add(new Drink(&quot;肄붿뭅肄쒕씪&quot;, 1500, 10, &quot;src/main/resources/image/1.jpg&quot;));</span>
+<span class="fc" id="L230">        drinkArrayList8.add(new Drink(&quot;�솚���룷�룄&quot;, 1500, 2, &quot;src/main/resources/image/6.jpg&quot;));</span>
+<span class="fc" id="L231">        drinkArrayList8.add(new Drink(&quot;�룷移대━�뒪�썾�듃&quot;, 1500, 0, &quot;src/main/resources/image/11.jpg&quot;));</span>
+<span class="fc" id="L232">        drinkArrayList8.add(new Drink(&quot;�뒪�뙆�겢留�&quot;, 1500, 0, &quot;src/main/resources/image/16.jpg&quot;));</span>
+<span class="fc" id="L233">        drinkArrayList8.add(new Drink(&quot;寃뚰넗�젅�씠&quot;, 1500, 0, &quot;src/main/resources/image/12.jpg&quot;));</span>
+<span class="fc" id="L234">        drinkArrayList8.add(new Drink(&quot;鍮꾨씫�떇�삙&quot;, 1500, 0, &quot;src/main/resources/image/17.jpg&quot;));</span>
+<span class="fc" id="L235">        drinkArrayList8.add(new Drink(&quot;�뒪�봽�씪�씠�듃&quot;, 1500, 0, &quot;src/main/resources/image/4.jpg&quot;));</span>
+<span class="fc" id="L236">        drinkArrayList8.add(new Drink(&quot;�솚���삤�젋吏�&quot;, 1500, 0, &quot;src/main/resources/image/5.jpg&quot;));</span>
+<span class="fc" id="L237">        drinkArrayList8.add(new Drink(&quot;�빂�떇�뒪&quot;, 1500, 0, &quot;src/main/resources/image/7.jpg&quot;));</span>
+<span class="fc" id="L238">        drinkArrayList8.add(new Drink(&quot;紐ъ뒪�꽣�뱶留곹겕&quot;, 1500, 0, &quot;src/main/resources/image/9.jpg&quot;));</span>
+<span class="fc" id="L239">        drinkArrayList8.add(new Drink(&quot;留덉슫�떞��&quot;, 1500, 0, &quot;src/main/resources/image/20.jpg&quot;));</span>
+<span class="fc" id="L240">        drinkArrayList8.add(new Drink(&quot;�렔�떆肄쒕씪&quot;, 1500, 0, &quot;src/main/resources/image/2.jpg&quot;));</span>
+<span class="fc" id="L241">        drinkArrayList8.add(new Drink(&quot;移좎꽦�궗�씠�떎&quot;, 1500, 0, &quot;src/main/resources/image/3.jpg&quot;));</span>
+<span class="fc" id="L242">        drinkArrayList8.add(new Drink(&quot;諛��궎�뒪&quot;, 1500, 0, &quot;src/main/resources/image/14.jpg&quot;));</span>
+<span class="fc" id="L243">        drinkArrayList8.add(new Drink(&quot;�뙆�썙�뿉�씠�뱶&quot;, 1500, 0, &quot;src/main/resources/image/13.jpg&quot;));</span>
+
+<span class="fc" id="L245">        DVM dvm1 = new DVMc(drinkArrayList, 0, 101);</span>
+<span class="fc" id="L246">        DVM dvm2 = new DVMc(drinkArrayList2, 1, 202);</span>
+<span class="fc" id="L247">        DVM dvm3 = new DVMc(drinkArrayList3, 2, 303);</span>
+<span class="fc" id="L248">        DVM dvm4 = new DVMc(drinkArrayList4, 3, 404);</span>
+<span class="fc" id="L249">        DVM dvm5 = new DVMc(drinkArrayList5, 4, 505);</span>
+<span class="fc" id="L250">        DVM dvm6 = new DVMc(drinkArrayList6, 5, 606);</span>
+<span class="fc" id="L251">        DVM dvm7 = new DVMc(drinkArrayList7, 6, 707);</span>
+<span class="fc" id="L252">        DVM dvm8 = new DVMc(drinkArrayList8, 7, 808);</span>
+<span class="fc" id="L253">        ArrayList&lt;DVM&gt; tempList = new ArrayList&lt;DVM&gt;();</span>
+<span class="fc" id="L254">        tempList.add(dvm1);</span>
+<span class="fc" id="L255">        tempList.add(dvm2);</span>
+<span class="fc" id="L256">        tempList.add(dvm3);</span>
+<span class="fc" id="L257">        tempList.add(dvm4);</span>
+<span class="fc" id="L258">        tempList.add(dvm5);</span>
+<span class="fc" id="L259">        tempList.add(dvm6);</span>
+<span class="fc" id="L260">        tempList.add(dvm7);</span>
+<span class="fc" id="L261">        tempList.add(dvm8);</span>
+<span class="fc" id="L262">        dvmList = tempList;</span>
+<span class="fc" id="L263">        network = new Network(dvmList);</span>
+<span class="fc" id="L264">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

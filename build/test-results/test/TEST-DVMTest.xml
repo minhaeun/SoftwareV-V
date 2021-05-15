@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DVMTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2021-05-15T12:16:47" hostname="DESKTOP-N5AKV6O" time="0.123">
+  <properties/>
+  <testcase name="makeLocationResponseMessageTest1()" classname="DVMTest" time="0.001"/>
+  <testcase name="makeLocationResponseMessageTest2()" classname="DVMTest" time="0.001"/>
+  <testcase name="makeStockResponseMessageTest1()" classname="DVMTest" time="0.001"/>
+  <testcase name="responseLocationMessageTest1()" classname="DVMTest" time="0.001"/>
+  <testcase name="responseLocationMessageTest2()" classname="DVMTest" time="0.008"/>
+  <testcase name="updateStockTest1()" classname="DVMTest" time="0.001"/>
+  <testcase name="updateStockTest2()" classname="DVMTest" time="0.098"/>
+  <testcase name="getAddress()" classname="DVMTest" time="0.001"/>
+  <testcase name="getId()" classname="DVMTest" time="0.0"/>
+  <testcase name="responseStockMessage()" classname="DVMTest" time="0.0"/>
+  <testcase name="getDrink_list()" classname="DVMTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

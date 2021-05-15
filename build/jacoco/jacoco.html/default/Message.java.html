@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Message.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ctiptest</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Message.java</span></div><h1>Message.java</h1><pre class="source lang-java linenums"><span class="fc" id="L1">public class Message {</span>
+
+    private int src_id;
+    private int dst_id;
+    private int msg_type;
+    private String msg;
+
+    public int getSrc_id() {
+<span class="fc" id="L9">        return this.src_id;</span>
+    }
+
+    public void setSrc_id(int src_id) {
+<span class="fc" id="L13">        this.src_id = src_id;</span>
+<span class="fc" id="L14">    }</span>
+
+    public int getDst_id() {
+<span class="fc" id="L17">        return this.dst_id;</span>
+    }
+
+    public void setDst_id(int dst_id) {
+<span class="fc" id="L21">        this.dst_id = dst_id;</span>
+<span class="fc" id="L22">    }</span>
+
+    public int getMsg_type() {
+<span class="fc" id="L25">        return this.msg_type;</span>
+    }
+
+    public void setMsg_type(int msg_type) {
+<span class="fc" id="L29">        this.msg_type = msg_type;</span>
+<span class="fc" id="L30">    }</span>
+
+    public void setMsg(String msg){
+<span class="fc" id="L33">        this.msg = msg;</span>
+<span class="fc" id="L34">    }</span>
+
+    public String getMsg(){
+<span class="fc" id="L37">        return this.msg;</span>
+    }
+
+    public Message createMessage(int src_id, int dst_id, int msg_type){
+<span class="fc" id="L41">        Message message = new Message();</span>
+<span class="fc" id="L42">        message.setDst_id(dst_id);</span>
+<span class="fc" id="L43">        message.setSrc_id(src_id);</span>
+<span class="fc" id="L44">        message.setMsg_type(msg_type);</span>
+<span class="fc" id="L45">        message.setMsg(&quot;&quot;);</span>
+<span class="fc" id="L46">        return message;</span>
+    }
+
+    public Message createMessage(int src_id, int dst_id, int msg_type, String msg){
+<span class="fc" id="L50">        Message message = new Message();</span>
+<span class="fc" id="L51">        message.setDst_id(dst_id);</span>
+<span class="fc" id="L52">        message.setSrc_id(src_id);</span>
+<span class="fc" id="L53">        message.setMsg_type(msg_type);</span>
+<span class="fc" id="L54">        message.setMsg(msg);</span>
+<span class="fc" id="L55">        return message;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
