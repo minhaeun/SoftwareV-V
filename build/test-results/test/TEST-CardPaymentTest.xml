@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CardPaymentTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2021-05-15T12:16:47" hostname="DESKTOP-N5AKV6O" time="0.113">
+  <properties/>
+  <testcase name="getCardTest1()" classname="CardPaymentTest" time="0.013"/>
+  <testcase name="getCardTest2()" classname="CardPaymentTest" time="0.006"/>
+  <testcase name="getCardTest3()" classname="CardPaymentTest" time="0.006"/>
+  <testcase name="generateCodeTest1()" classname="CardPaymentTest" time="0.037"/>
+  <testcase name="generateCodeTest2()" classname="CardPaymentTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

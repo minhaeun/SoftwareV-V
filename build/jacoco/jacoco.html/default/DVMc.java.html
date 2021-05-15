@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DVMc.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ctiptest</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">DVMc.java</span></div><h1>DVMc.java</h1><pre class="source lang-java linenums">import java.util.ArrayList;
+
+public class DVMc implements DVM{
+
+    private ArrayList&lt;Drink&gt; drink_list;
+    private int id;
+    private int address;
+
+<span class="fc" id="L9">    public DVMc(ArrayList&lt;Drink&gt; drink_list, int id, int address) {</span>
+<span class="fc" id="L10">        this.drink_list = drink_list;</span>
+<span class="fc" id="L11">        this.id = id;</span>
+<span class="fc" id="L12">        this.address = address;</span>
+<span class="fc" id="L13">    }</span>
+
+    public ArrayList&lt;Drink&gt; getDrink_list() {
+<span class="fc" id="L16">        return drink_list;</span>
+    }
+
+    public int getId() {
+<span class="fc" id="L20">        return id;</span>
+    }
+
+    public int getAddress() {
+<span class="fc" id="L24">        return address;</span>
+    }
+
+    public Message makeStockResponseMessage(int dst_id, int stock) {
+<span class="fc" id="L28">        Message message = new Message();</span>
+<span class="fc" id="L29">        String stockMsg = Integer.toString(stock);</span>
+<span class="fc" id="L30">        return message.createMessage(getId(), dst_id, MsgType.RESPONSE_STOCK, stockMsg);</span>
+    }
+
+    public int responseStockMessage(Network network, Message message) {
+<span class="fc" id="L34">        String str = &quot;ResponseBroadCastMessage == src_id: &quot; + message.getSrc_id() + &quot;, dst_id: &quot; + message.getSrc_id() + &quot;, msg_type: &quot; + MsgType.RESPONSE_STOCK + &quot;, msg: &quot; + message.getMsg();</span>
+<span class="fc" id="L35">        System.out.println(str);</span>
+<span class="fc" id="L36">        return network.responseBroadcastMessage(message);</span>
+    }
+
+    public void updateStock(Drink selected_drink) {
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        for(Drink drink : drink_list){</span>
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">            if(drink.getName().equals(selected_drink.getName())){</span>
+<span class="nc" id="L42">                drink.updateStock();</span>
+            }
+<span class="fc" id="L44">        }</span>
+<span class="fc" id="L45">    }</span>
+
+    public Message makeLocationResponseMessage(int src_id) {
+<span class="fc" id="L48">        Message message = new Message();</span>
+<span class="fc" id="L49">        int address = getAddress();</span>
+<span class="fc" id="L50">        return message.createMessage(getId(), src_id, MsgType.RESPONSE_LOCATION, Integer.toString(address));</span>
+    }
+
+    public int responseLocationMessage(Network network, Message message){
+<span class="fc" id="L54">        String str = &quot;ResponseBroadCastMessage == src_id: &quot; + message.getSrc_id() + &quot;, dst_id: &quot; + message.getSrc_id() + &quot;, msg_type: &quot; + MsgType.RESPONSE_LOCATION + &quot;, msg: &quot; + message.getMsg();</span>
+<span class="fc" id="L55">        System.out.println(str);</span>
+<span class="fc" id="L56">        return network.responseNormalMessage(message);</span>
+    }
+
+    @Override
+    public Message makeStockRequestMessage(int dst_id, String drink_name) {
+<span class="fc" id="L61">        Message message = new Message();</span>
+<span class="fc" id="L62">        return message.createMessage(getId(), dst_id, MsgType.REQUEST_STOCK, drink_name);</span>
+    }
+
+    @Override
+    public Object requestStockMessage(Network network, Message message) {
+<span class="fc" id="L67">        String str = &quot;requestStockMessage == src_id: &quot; + getId() + &quot;, msg_type: &quot; + MsgType.REQUEST_STOCK + &quot;, msg: &quot; + message.getMsg();</span>
+<span class="fc" id="L68">        System.out.println(str);</span>
+<span class="fc" id="L69">        Object result = network.handleRequestMessage(message);</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">        if(result.getClass() == Integer.class){</span>
+<span class="nc" id="L71">            int stock = (int)result;</span>
+
+<span class="nc" id="L73">            return stock;</span>
+        }
+        else{
+<span class="fc" id="L76">            ArrayList&lt;DVM&gt; accessible_DVM_list = (ArrayList&lt;DVM&gt;)network.handleRequestMessage(message);</span>
+<span class="fc" id="L77">            return accessible_DVM_list;</span>
+        }
+    }
+
+    @Override
+    public Message makeLocationRequestMessage(int dst_id) {
+<span class="fc" id="L83">        Message message = new Message().createMessage(getId(), dst_id, MsgType.REQUEST_LOCATION);</span>
+
+<span class="fc" id="L85">        return message;</span>
+    }
+
+    @Override
+    public int requestLocationMessage(Network network, Message message) {
+<span class="fc" id="L90">        String str = &quot;requestLocationMessage == src_id: &quot; + message.getSrc_id()+ &quot;,dst_id: &quot;+message.getDst_id()</span>
+<span class="fc" id="L91">                +&quot;, msg_type: &quot; + MsgType.REQUEST_LOCATION + &quot;, msg: &quot; + message.getMsg();</span>
+<span class="fc" id="L92">        System.out.println(str);</span>
+<span class="fc" id="L93">        int i = (int)network.handleRequestMessage(message);</span>
+
+
+<span class="fc" id="L96">        return i;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

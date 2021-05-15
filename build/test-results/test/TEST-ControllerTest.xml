@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ControllerTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2021-05-15T12:16:47" hostname="DESKTOP-N5AKV6O" time="0.192">
+  <properties/>
+  <testcase name="checkCodeAvailable()" classname="ControllerTest" time="0.014"/>
+  <testcase name="selectCurrentDrink()" classname="ControllerTest" time="0.019"/>
+  <testcase name="selectDVM()" classname="ControllerTest" time="0.003"/>
+  <testcase name="enterCode()" classname="ControllerTest" time="0.003"/>
+  <testcase name="insertCard2()" classname="ControllerTest" time="0.006"/>
+  <testcase name="selectOtherDrink()" classname="ControllerTest" time="0.086"/>
+  <testcase name="insertCard()" classname="ControllerTest" time="0.012"/>
+  <testcase name="getCodeInfo()" classname="ControllerTest" time="0.002"/>
+  <testcase name="deleteCode()" classname="ControllerTest" time="0.003"/>
+  <testcase name="startService()" classname="ControllerTest" time="0.014"/>
+  <system-out><![CDATA[0
+requestStockMessage == src_id: 0, msg_type: 1, msg: 移좎꽦?궗?씠?떎
+ResponseBroadCastMessage == src_id: 0, dst_id: 0, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 1, dst_id: 1, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 2, dst_id: 2, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 3, dst_id: 3, msg_type: 2, msg: 4
+ResponseBroadCastMessage == src_id: 4, dst_id: 4, msg_type: 2, msg: 1
+ResponseBroadCastMessage == src_id: 5, dst_id: 5, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 6, dst_id: 6, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 7, dst_id: 7, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 0, dst_id: 0, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 1, dst_id: 1, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 2, dst_id: 2, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 3, dst_id: 3, msg_type: 2, msg: 4
+ResponseBroadCastMessage == src_id: 4, dst_id: 4, msg_type: 2, msg: 1
+ResponseBroadCastMessage == src_id: 5, dst_id: 5, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 6, dst_id: 6, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 7, dst_id: 7, msg_type: 2, msg: 0
+requestStockMessage == src_id: 1, msg_type: 1, msg: ?빂?떇?뒪
+ResponseBroadCastMessage == src_id: 0, dst_id: 0, msg_type: 2, msg: 10
+ResponseBroadCastMessage == src_id: 1, dst_id: 1, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 2, dst_id: 2, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 3, dst_id: 3, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 4, dst_id: 4, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 5, dst_id: 5, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 6, dst_id: 6, msg_type: 2, msg: 12
+ResponseBroadCastMessage == src_id: 7, dst_id: 7, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 0, dst_id: 0, msg_type: 2, msg: 10
+ResponseBroadCastMessage == src_id: 1, dst_id: 1, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 2, dst_id: 2, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 3, dst_id: 3, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 4, dst_id: 4, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 5, dst_id: 5, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 6, dst_id: 6, msg_type: 2, msg: 12
+ResponseBroadCastMessage == src_id: 7, dst_id: 7, msg_type: 2, msg: 0
+鍮≫뀗?뀡
+requestStockMessage == src_id: 0, msg_type: 1, msg: 鍮≫뀗?뀡
+ResponseBroadCastMessage == src_id: 0, dst_id: 0, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 1, dst_id: 1, msg_type: 2, msg: 10
+ResponseBroadCastMessage == src_id: 2, dst_id: 2, msg_type: 2, msg: 13
+ResponseBroadCastMessage == src_id: 3, dst_id: 3, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 4, dst_id: 4, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 5, dst_id: 5, msg_type: 2, msg: 10
+ResponseBroadCastMessage == src_id: 6, dst_id: 6, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 7, dst_id: 7, msg_type: 2, msg: 1
+ResponseBroadCastMessage == src_id: 0, dst_id: 0, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 1, dst_id: 1, msg_type: 2, msg: 10
+ResponseBroadCastMessage == src_id: 2, dst_id: 2, msg_type: 2, msg: 13
+ResponseBroadCastMessage == src_id: 3, dst_id: 3, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 4, dst_id: 4, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 5, dst_id: 5, msg_type: 2, msg: 10
+ResponseBroadCastMessage == src_id: 6, dst_id: 6, msg_type: 2, msg: 0
+ResponseBroadCastMessage == src_id: 7, dst_id: 7, msg_type: 2, msg: 1
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

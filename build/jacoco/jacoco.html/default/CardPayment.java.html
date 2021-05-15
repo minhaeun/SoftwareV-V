@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CardPayment.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ctiptest</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">CardPayment.java</span></div><h1>CardPayment.java</h1><pre class="source lang-java linenums">import java.util.ArrayList;
+import java.util.Arrays;
+
+public class CardPayment {
+
+    private Card card_info;
+    private Drink drink_info;
+    private boolean isPrePayment;
+    ArrayList&lt;Card&gt; basicCardList;
+
+<span class="fc" id="L11">    public CardPayment() {</span>
+<span class="fc" id="L12">        init();</span>
+<span class="fc" id="L13">    }</span>
+
+    private void init() {
+<span class="fc" id="L16">        int[] basicCardNameList = {12341234,11111111, 10000000};</span>
+<span class="fc" id="L17">        Card card1 = new Card(basicCardNameList[0], 10000);</span>
+<span class="fc" id="L18">        Card card2 = new Card(basicCardNameList[1], 0);</span>
+<span class="fc" id="L19">        Card card3 = new Card(basicCardNameList[2], 10000);</span>
+<span class="fc" id="L20">        ArrayList&lt;Card&gt; tempList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L21">        tempList.add(card1);</span>
+<span class="fc" id="L22">        tempList.add(card2);</span>
+<span class="fc" id="L23">        tempList.add(card3);</span>
+<span class="fc" id="L24">        basicCardList = tempList;</span>
+<span class="fc" id="L25">    }</span>
+
+    public Code generateCode(Drink selected_drink){
+        //5�옄由� 肄붾뱶 �깮�꽦 �썑, �쓬猷� 媛앹껜�옉 �빀爾먯꽌 肄붾뱶 媛앹껜 �깮�꽦
+<span class="fc" id="L29">        drink_info = selected_drink;</span>
+<span class="fc" id="L30">        int generatedCodeNum = (int)(Math.random() * (99999 - 10000 + 1)) + 10000;</span>
+<span class="fc" id="L31">        Code generatedCode = new Code(generatedCodeNum, drink_info);</span>
+<span class="fc" id="L32">        return generatedCode;</span>
+    }
+
+    public Card getCard(int card_num) {
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        for (Card card : basicCardList) {</span>
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">            if (card.getCard_num()== card_num) {</span>
+<span class="fc" id="L38">                return card;</span>
+            }
+<span class="nc" id="L40">        }</span>
+<span class="nc" id="L41">        return null;</span>
+    }
+
+    public Boolean getCard_available(int card_num) {
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        for (Card card : basicCardList) {</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">            if(card.getCard_num() == card_num)</span>
+<span class="fc" id="L47">                return true;</span>
+<span class="nc" id="L48">        }</span>
+<span class="nc" id="L49">        return false;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

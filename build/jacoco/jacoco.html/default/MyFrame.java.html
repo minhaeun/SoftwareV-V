@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MyFrame.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ctiptest</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">MyFrame.java</span></div><h1>MyFrame.java</h1><pre class="source lang-java linenums">import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+public class MyFrame extends JFrame {
+
+<span class="nc" id="L9">    int stage = 0;</span>
+<span class="nc" id="L10">    int inputNum = 0;</span>
+<span class="nc" id="L11">    int inputTemp = 0;</span>
+<span class="nc" id="L12">    JTextField inputText = new JTextField(&quot;          &quot;, SwingConstants.CENTER); // �궗�슜�옄 �엯�젰�쓣 諛쏅뒗 �뀓�뒪�듃 �븘�뱶;</span>
+<span class="nc" id="L13">    String[] num_list = {&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;0&quot;, &quot;�넀&quot;, &quot;�솗�씤&quot;};</span>
+<span class="nc" id="L14">    JButton[] dialButton_list = new JButton[12];</span>
+<span class="nc" id="L15">    ArrayList&lt;JLabel&gt; labelList = new ArrayList&lt;JLabel&gt;();</span>
+
+    /////////////// panel �뱾 ///////////////
+<span class="nc" id="L18">    JPanel pDial = new JPanel();</span>
+<span class="nc" id="L19">    JPanel panelDown = new JPanel();</span>
+<span class="nc" id="L20">    JPanel pTemp = new JPanel();</span>
+<span class="nc" id="L21">    JPanel pScreen = new JPanel();</span>
+<span class="nc" id="L22">    JPanel pInput = new JPanel();</span>
+
+    /////////////// gridBagLayout �렪�븯寃� �궗�슜�븯�젮怨� �쟾�뿭�쑝濡� �꽑�뼵 ///////////////
+<span class="nc" id="L25">    GridBagLayout grid = new GridBagLayout();</span>
+<span class="nc" id="L26">    GridBagConstraints gbc = new GridBagConstraints();</span>
+
+    // controller 媛앹껜
+<span class="nc" id="L29">    Controller controller = new Controller();</span>
+<span class="nc" id="L30">    int[] dvmAddresses = {101, 202, 303, 404, 505, 606, 707, 808};</span>
+
+<span class="nc" id="L32">    MyFrame() {</span>
+<span class="nc" id="L33">        init();</span>
+<span class="nc" id="L34">    }</span>
+
+
+    private void init() {
+
+<span class="nc" id="L39">        setLayout(new GridLayout(2, 1)); // �쟾泥� �솕硫댁쓣 洹몃━�뱶�삎�깭濡� �쐞(�뒪�겕由�) �븘�옒(踰꾪듉) 遺꾪븷</span>
+
+<span class="nc" id="L41">        pDial.setLayout(grid);</span>
+
+<span class="nc" id="L43">        gbc.fill = GridBagConstraints.BOTH;</span>
+<span class="nc" id="L44">        gbc.weightx = 1.0;</span>
+<span class="nc" id="L45">        gbc.weighty = 1.0;</span>
+
+<span class="nc" id="L47">        setDialButton(dialButton_list);</span>
+
+        // JPanel�뿉 踰꾪듉�뱾 add
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        for (int i = 0; i &lt; num_list.length; i++) {</span>
+<span class="nc" id="L51">            pDial.add(dialButton_list[i]);</span>
+        }
+
+<span class="nc" id="L54">        showAllDVMList(pScreen); // 珥덇린 �쟾泥� DVM 異쒕젰</span>
+        //showAccessibleDVMList(pScreen, dvmList);
+        // 猷⑦듃 �봽�젅�엫�뿉 screen JPanel add
+<span class="nc" id="L57">        panelDown.setLayout(grid);</span>
+        // 猷⑦듃 �봽�젅�엫�뿉 button�뱾 JPanel add
+
+<span class="nc" id="L60">        pInput.setLayout(new BorderLayout());</span>
+<span class="nc" id="L61">        pInput.add(inputText,BorderLayout.CENTER);</span>
+
+<span class="nc" id="L63">        gbc(pTemp, 0, 0, 4, 1);</span>
+<span class="nc" id="L64">        gbc(pInput, 0, 1, 4, 1);</span>
+<span class="nc" id="L65">        gbc(pDial, 0, 2, 4, 4);</span>
+
+<span class="nc" id="L67">        pInput.setBackground(Color.GRAY);</span>
+
+<span class="nc" id="L69">        panelDown.add(pTemp);</span>
+<span class="nc" id="L70">        panelDown.add(pInput);</span>
+<span class="nc" id="L71">        panelDown.add(pDial);</span>
+<span class="nc" id="L72">        add(pScreen);</span>
+<span class="nc" id="L73">        add(panelDown);</span>
+
+        // ------------------------------------------------
+<span class="nc" id="L76">        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // �봽�젅�엫�쓽 x踰꾪듉�쓣 �솢�꽦�솕�븯�뿬 �떕湲곕쾭�듉�씠 �떎�뻾媛��뒫�빐吏�</span>
+
+<span class="nc" id="L78">        setSize(600, 800); // �봽�젅�엫 �궗�씠利� 吏��젙</span>
+
+<span class="nc" id="L80">        setVisible(true); // �봽�젅�엫�쓣 蹂댁씠寃� �븿</span>
+
+<span class="nc" id="L82">        setLocationRelativeTo(null); // �봽�젅�엫 �떎�뻾�떆 �쐞移� 以묒븰</span>
+
+<span class="nc" id="L84">    }</span>
+
+    private void showAllDVMList(JPanel pScreen) {
+<span class="nc" id="L87">        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; dvmInfo = controller.startService();</span>
+
+
+<span class="nc" id="L90">        pScreen.setLayout(grid);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        for (int i = 0; i &lt; 2; i++) {</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">            for (int j = 0; j &lt; 4; j++) {</span>
+<span class="nc" id="L93">                ImageIcon imageIcon = new ImageIcon(new ImageIcon(&quot;src/main/resources/image/vm_image.png&quot;)</span>
+<span class="nc" id="L94">                        .getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT));</span>
+<span class="nc" id="L95">                int num = i * 4 + j;</span>
+<span class="nc" id="L96">                int id = dvmInfo.get(num).get(0)+1;</span>
+<span class="nc" id="L97">                int address = dvmInfo.get(num).get(1);</span>
+<span class="nc" id="L98">                labelList.add(new JLabel(&quot;&lt;html&gt;&quot;+ (num + 1) + &quot;. DVM&quot; + id + &quot;&lt;br&gt;二쇱냼: &quot; + address + &quot;&lt;/html&gt;&quot;, imageIcon, JLabel.CENTER));</span>
+            }
+        }
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        for (int i = 0; i &lt; 2; i++) {</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">            for (int j = 0; j &lt; 4; j++) {</span>
+<span class="nc" id="L103">                gbc(labelList.get(i * 4 + j), j, i, 1, 1);</span>
+                //labelList.get(i * 4 + j).setHorizontalAlignment(SwingConstants.CENTER);
+            }
+        }
+<span class="nc bnc" id="L107" title="All 2 branches missed.">        for (int i = 0; i &lt; dvmInfo.size(); i++) {</span>
+<span class="nc" id="L108">            pScreen.add(labelList.get(i));</span>
+        }
+<span class="nc" id="L110">    }</span>
+
+    //�옄�뙋湲� �쓬猷뚯닔 異쒕젰//
+
+    private void showDVMDrinkList(JPanel pScreen, int num) {
+<span class="nc" id="L115">        ArrayList&lt;JLabel&gt; label_drink = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L116">        pScreen.setLayout(grid);</span>
+<span class="nc" id="L117">        DVM currentDVM = controller.selectDVM(num);</span>
+<span class="nc" id="L118">        ArrayList&lt;Drink&gt; currentDrinkList = currentDVM.getDrink_list();</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        for (int i = 0; i &lt; 4; i++) {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">            for (int j = 0; j &lt; 5; j++) {</span>
+<span class="nc" id="L121">                int index = i * 5 + j;</span>
+<span class="nc" id="L122">                Drink drink = currentDrinkList.get(index);</span>
+<span class="nc" id="L123">                ImageIcon imageIcon = new ImageIcon(new ImageIcon(drink.getImgURL())</span>
+<span class="nc" id="L124">                        .getImage().getScaledInstance(30,30,Image.SCALE_DEFAULT));</span>
+<span class="nc" id="L125">                String name = drink.getName();</span>
+<span class="nc" id="L126">                int price = drink.getPrice();</span>
+<span class="nc" id="L127">                int stock = drink.getStock();</span>
+<span class="nc" id="L128">                label_drink.add(new JLabel(&quot;&lt;html&gt;&quot;+ (index + 1) + &quot;.&quot; + name + &quot;&lt;br&gt;&quot; + price + &quot;�썝 (&quot; + stock + &quot;媛�)&lt;/html&gt;&quot;, imageIcon, JLabel.LEFT));</span>
+            }
+        }
+<span class="nc bnc" id="L131" title="All 2 branches missed.">        for (int i = 0; i &lt; 4; i++) {</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">            for (int j = 0; j &lt; 5; j++) {</span>
+<span class="nc" id="L133">                gbc(label_drink.get(i * 5 + j), j, i, 1, 1);</span>
+            }
+        }
+<span class="nc bnc" id="L136" title="All 2 branches missed.">        for (int i = 0; i &lt; currentDrinkList.size(); i++) {</span>
+<span class="nc" id="L137">            pScreen.add(label_drink.get(i));</span>
+        }
+<span class="nc" id="L139">    }</span>
+
+    private void setDialButton(JButton[] dialButton_list) {
+<span class="nc bnc" id="L142" title="All 2 branches missed.">        for (int i = 0; i &lt; 3; i++) { // 1 ~ 9 踰꾪듉</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">            for (int j = 0; j &lt; 3; j++) {</span>
+<span class="nc" id="L144">                dialButton_list[i * 3 + j] = new  JButton(num_list[i * 3 + j]);</span>
+<span class="nc" id="L145">                gbc(dialButton_list[i * 3 + j], j, i, 1, 1);</span>
+
+<span class="nc" id="L147">                MyFrame.PadInput handler = new MyFrame.PadInput(); // �궎�뙣�뱶 �씠踰ㅽ듃瑜� 諛쒖깮 �떆�궎湲� �쐞�빐 handler �깮�꽦</span>
+<span class="nc" id="L148">                dialButton_list[i * 3 + j].addActionListener(handler); // �씠踰ㅽ듃 �벑濡�</span>
+            }
+        }
+<span class="nc" id="L151">        dialButton_list[9] = new JButton(num_list[9]);     // 0 踰꾪듉</span>
+<span class="nc" id="L152">        gbc(dialButton_list[9], 0, 3, 2, 1);</span>
+<span class="nc" id="L153">        PadInput handler9 = new PadInput(); // �궎�뙣�뱶 �씠踰ㅽ듃瑜� 諛쒖깮 �떆�궎湲� �쐞�빐 handler �깮�꽦</span>
+<span class="nc" id="L154">        dialButton_list[9].addActionListener(handler9); // �씠踰ㅽ듃 �벑濡�</span>
+
+<span class="nc" id="L156">        dialButton_list[10] = new JButton(num_list[10]);   // �넀 踰꾪듉</span>
+<span class="nc" id="L157">        gbc(dialButton_list[10], 2, 3, 1, 1);</span>
+<span class="nc" id="L158">        PadInput handler10 = new PadInput(); // �궎�뙣�뱶 �씠踰ㅽ듃瑜� 諛쒖깮 �떆�궎湲� �쐞�빐 handler �깮�꽦</span>
+<span class="nc" id="L159">        dialButton_list[10].addActionListener(handler10); // �씠踰ㅽ듃 �벑濡�</span>
+
+<span class="nc" id="L161">        dialButton_list[11] = new JButton(num_list[11]);   // �솗�씤 踰꾪듉</span>
+<span class="nc" id="L162">        gbc(dialButton_list[11], 3, 0, 1, 4);</span>
+<span class="nc" id="L163">        PadInput handler11 = new PadInput(); // �궎�뙣�뱶 �씠踰ㅽ듃瑜� 諛쒖깮 �떆�궎湲� �쐞�빐 handler �깮�꽦</span>
+<span class="nc" id="L164">        dialButton_list[11].addActionListener(handler11); // �씠踰ㅽ듃 �벑濡�</span>
+<span class="nc" id="L165">    }</span>
+
+<span class="nc" id="L167">    private class PadInput implements ActionListener {</span>
+
+        public void actionPerformed(ActionEvent event) {
+<span class="nc" id="L170">            String eventText = event.getActionCommand();</span>
+
+<span class="nc bnc" id="L172" title="All 2 branches missed.">            if(inputTemp == 0){</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">                if(eventText.equals(&quot;�솗�씤&quot;)){</span>
+<span class="nc" id="L174">                    inputNum = inputTemp;</span>
+<span class="nc" id="L175">                    inputText.setText(&quot;&quot;);</span>
+                    // �꽑�깮�셿猷� 硫붿떆吏�
+<span class="nc" id="L177">                    JOptionPane aa=new JOptionPane();</span>
+<span class="nc bnc" id="L178" title="All 4 branches missed.">                    if(inputNum &gt;=1 &amp;&amp; inputNum &lt;= 8) {</span>
+<span class="nc" id="L179">                        JOptionPane.showMessageDialog(null, inputNum + &quot;踰� DVM�쓣 �꽑�깮�븯�뀲�뒿�땲�떎.&quot;);</span>
+<span class="nc" id="L180">                        pScreen.removeAll();</span>
+<span class="nc" id="L181">                        showDVMDrinkList(pScreen, inputNum);</span>
+<span class="nc" id="L182">                        pScreen.updateUI();</span>
+                    }
+                    else
+<span class="nc" id="L185">                        JOptionPane.showMessageDialog(null, &quot;�삱諛붾Ⅸ 踰덊샇瑜� �꽑�깮�빐 二쇱떗�떆�삤 (1~8)&quot;);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">                }else if(eventText.equals(&quot;�넀&quot;)) {</span>
+<span class="nc" id="L187">                    inputTemp = 0;</span>
+<span class="nc" id="L188">                    inputText.setText(&quot;&quot;);</span>
+                }else {                                           //0~9 �궗�씠�쓽 �닽�옄 input
+<span class="nc" id="L190">                    inputTemp = Integer.parseInt(eventText);</span>
+<span class="nc" id="L191">                    String temp = inputText.getText();</span>
+<span class="nc" id="L192">                    inputText.setText(temp + eventText);</span>
+<span class="nc" id="L193">                }</span>
+            }
+            // �떗�쓽�옄由ъ닔 �씠�긽�쓽 input 而⑦듃濡�
+            else{
+<span class="nc bnc" id="L197" title="All 2 branches missed.">                if(eventText.equals(&quot;�솗�씤&quot;)){</span>
+<span class="nc" id="L198">                    inputNum = inputTemp;</span>
+<span class="nc" id="L199">                    inputTemp = 0;</span>
+<span class="nc" id="L200">                    inputText.setText(&quot;&quot;);</span>
+                    //JOptionPane aa=new JOptionPane();
+<span class="nc bnc" id="L202" title="All 8 branches missed.">                    switch(stage) {</span>
+                        case 0: // DVM �꽑�깮
+<span class="nc bnc" id="L204" title="All 4 branches missed.">                            if(inputNum&gt;=1 &amp;&amp; inputNum&lt;=8) {</span>
+<span class="nc" id="L205">                                JOptionPane.showMessageDialog(null, inputNum + &quot;踰� DVM�쓣 �꽑�깮�븯�뀲�뒿�땲�떎.&quot;);</span>
+<span class="nc" id="L206">                                pScreen.removeAll();</span>
+<span class="nc" id="L207">                                showDVMDrinkList(pScreen, inputNum);</span>
+<span class="nc" id="L208">                                pScreen.updateUI();</span>
+<span class="nc" id="L209">                                stage=1;</span>
+                            }
+                            else{
+<span class="nc" id="L212">                                JOptionPane.showMessageDialog(null, inputNum + &quot;踰덉� 議댁옱�븯吏��븡�뒿�땲�떎. �삱諛붾Ⅸ 踰덊샇瑜� �꽑�깮�빐 二쇱떗�떆�삤 (1~8)&quot;);</span>
+                            }
+<span class="nc" id="L214">                            break;</span>
+                        case 1: // Drink �꽑�깮
+<span class="nc bnc" id="L216" title="All 4 branches missed.">                            if(inputNum&gt;=1 &amp;&amp; inputNum&lt;=7) {</span>
+<span class="nc" id="L217">                                JOptionPane.showMessageDialog(null,inputNum + &quot;踰� �쓬猷뚮�� �꽑�깮�븯�뀲�뒿�땲�떎.&quot;);</span>
+<span class="nc" id="L218">                                pScreen.removeAll();</span>
+<span class="nc" id="L219">                                proceedCurrentDrink(pScreen, inputNum);</span>
+<span class="nc" id="L220">                                pScreen.updateUI();</span>
+
+                            }
+<span class="nc bnc" id="L223" title="All 4 branches missed.">                            else if(inputNum &gt;= 8 &amp;&amp; inputNum &lt;= 20){</span>
+                                // �쁽�옱 DVM�뿉 �뾾�뒗 �쓬猷뚮�� �꽑�깮�븳 寃쎌슦, �꽑寃곗젣 吏꾪뻾
+                                // �떎瑜� DVM�뿉 �옱怨� �솗�씤 �슂泥� �썑 �옱怨좉� �엳�뒗 DVM 異쒕젰
+                                //JOptionPane.showMessageDialog(null,inputNum + &quot;踰� �쓬猷뚮뒗 �쁽�옱 �옄�뙋湲곗뿉 議댁옱�븯吏� �븡�뒿�땲�떎. �꽑寃곗젣瑜� 吏꾪뻾�빀�땲�떎.&quot;);
+<span class="nc" id="L227">                                pScreen.removeAll();</span>
+<span class="nc" id="L228">                                proceedOtherDrink(pScreen, inputNum);</span>
+<span class="nc" id="L229">                                pScreen.updateUI();</span>
+                            }
+                            else
+<span class="nc" id="L232">                                JOptionPane.showMessageDialog(null, &quot;�옒紐삳맂  �엯�젰�뻽�뒿�땲�떎. 1~20踰덉쓽 �쓬猷뚮�� �꽑�깮�빐二쇱꽭�슂.&quot;);</span>
+<span class="nc" id="L233">                            break;</span>
+                        case 2: // 寃곗젣諛⑸쾿 �꽑�깮
+<span class="nc bnc" id="L235" title="All 2 branches missed.">                            if(inputNum == 1) {</span>
+<span class="nc" id="L236">                                JOptionPane.showMessageDialog(null, &quot;移대뱶 寃곗젣瑜� �꽑�깮�븯�뀲�뒿�땲�떎.&quot;);</span>
+<span class="nc" id="L237">                                pScreen.removeAll();</span>
+<span class="nc" id="L238">                                showCardInput(pScreen);</span>
+<span class="nc" id="L239">                                pScreen.updateUI();</span>
+<span class="nc" id="L240">                                stage = 3;</span>
+                            }
+<span class="nc bnc" id="L242" title="All 2 branches missed.">                            else if(inputNum == 2){</span>
+<span class="nc" id="L243">                                JOptionPane.showMessageDialog(null, &quot;肄붾뱶 寃곗젣瑜� �꽑�깮�븯�뀲�뒿�땲�떎.&quot;);</span>
+<span class="nc" id="L244">                                pScreen.removeAll();</span>
+<span class="nc" id="L245">                                showInputCode();</span>
+<span class="nc" id="L246">                                pScreen.updateUI();</span>
+<span class="nc" id="L247">                                stage = 4;</span>
+                            }
+                            else
+<span class="nc" id="L250">                                JOptionPane.showMessageDialog(null, &quot;踰덊샇瑜� �옒紐� �엯�젰�뻽�뒿�땲�떎. 1 or 2瑜� �엯�젰�빐二쇱꽭�슂.&quot;);</span>
+<span class="nc" id="L251">                            break;</span>
+                        case 3: // 移대뱶 �꽑�깮
+//                            aa.showMessageDialog(null, &quot;移대뱶瑜� �꽑�깮�빐二쇱꽭�슂.&quot;);
+                            // 移대뱶 紐⑸줉 異쒕젰
+<span class="nc" id="L255">                            String result = controller.insertCard(inputNum, false);</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">                            if(result.equals(&quot;not available card&quot;)){</span>
+<span class="nc" id="L257">                                JOptionPane.showMessageDialog(null, &quot;�쑀�슚�븯吏� �븡�� 移대뱶�엯�땲�떎. 珥덇린�솕硫댁쑝濡� �룎�븘媛묐땲�떎.&quot;);</span>
+                                // 珥덇린 �솕硫댁쑝濡� �룎�븘媛�
+<span class="nc" id="L259">                                stage = 0;</span>
+<span class="nc" id="L260">                                pScreen.removeAll();</span>
+<span class="nc" id="L261">                                showAllDVMList(pScreen);</span>
+<span class="nc" id="L262">                                pScreen.updateUI();</span>
+                            }
+<span class="nc bnc" id="L264" title="All 2 branches missed.">                            else if(result.equals(&quot;insufficient balance&quot;))</span>
+                            {
+<span class="nc" id="L266">                            JOptionPane.showMessageDialog(null, &quot;�옍怨좉� 遺�議깊빀�땲�떎. 珥덇린�솕硫댁쑝濡� �룎�븘媛묐땲�떎.&quot;);</span>
+                            // 珥덇린 �솕硫댁쑝濡� �룎�븘媛�
+<span class="nc" id="L268">                            stage = 0;</span>
+<span class="nc" id="L269">                            pScreen.removeAll();</span>
+<span class="nc" id="L270">                            showAllDVMList(pScreen);</span>
+<span class="nc" id="L271">                            pScreen.updateUI();</span>
+                            }
+                            else{
+<span class="nc" id="L274">                                JOptionPane.showMessageDialog(null, result);</span>
+                                // �쓬猷뚯닔 吏�湲�, �쓬猷뚯닔 �옱怨� �뾽�뜲�씠�듃
+                                // 珥덇린 �솕硫댁쑝濡� �룎�븘媛�
+<span class="nc" id="L277">                                stage = 0;</span>
+<span class="nc" id="L278">                                pScreen.removeAll();</span>
+<span class="nc" id="L279">                                showAllDVMList(pScreen);</span>
+<span class="nc" id="L280">                                pScreen.updateUI();</span>
+                            }
+<span class="nc" id="L282">                            break;</span>
+                        case 4: // 肄붾뱶 �엯�젰
+<span class="nc" id="L284">                            String prepaymentResult = controller.enterCode(inputNum);</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">                            if(prepaymentResult.equals(&quot;&quot;)){</span>
+<span class="nc" id="L286">                                JOptionPane.showMessageDialog(null, &quot;�쑀�슚�븯吏� �븡�� 肄붾뱶�엯�땲�떎. 珥덇린�솕硫댁쑝濡� �룎�븘媛묐땲�떎.&quot;);</span>
+                                // 珥덇린 �솕硫댁쑝濡� �룎�븘媛�
+<span class="nc" id="L288">                                stage = 0;</span>
+<span class="nc" id="L289">                                pScreen.removeAll();</span>
+<span class="nc" id="L290">                                showAllDVMList(pScreen);</span>
+<span class="nc" id="L291">                                pScreen.updateUI();</span>
+                            }
+                            else{
+<span class="nc" id="L294">                                JOptionPane.showMessageDialog(null, prepaymentResult);</span>
+<span class="nc" id="L295">                                stage = 0;</span>
+<span class="nc" id="L296">                                pScreen.removeAll();</span>
+<span class="nc" id="L297">                                showAllDVMList(pScreen);</span>
+<span class="nc" id="L298">                                pScreen.updateUI();</span>
+                            }
+<span class="nc" id="L300">                            break;</span>
+                        case 5: // �꽑寃곗젣 吏꾪뻾
+<span class="nc" id="L302">                            String prePaymentResult = controller.insertCard(inputNum, true);</span>
+<span class="nc" id="L303">                            JOptionPane.showMessageDialog(null, prePaymentResult);</span>
+<span class="nc" id="L304">                            stage = 0;</span>
+<span class="nc" id="L305">                            pScreen.removeAll();</span>
+<span class="nc" id="L306">                            showAllDVMList(pScreen);</span>
+<span class="nc" id="L307">                            pScreen.updateUI();</span>
+<span class="nc" id="L308">                            break;</span>
+                        case 6: // �옱怨� �엳�뒗 DVM �쐞移� 異쒕젰
+                            //showAccessibleDVMList(pScreen);
+<span class="nc" id="L311">                            stage = 0;</span>
+<span class="nc" id="L312">                            pScreen.removeAll();</span>
+<span class="nc" id="L313">                            showAllDVMList(pScreen);</span>
+<span class="nc" id="L314">                            pScreen.updateUI();</span>
+<span class="nc" id="L315">                            break;</span>
+
+                    }
+<span class="nc bnc" id="L318" title="All 2 branches missed.">                }else if(eventText.equals(&quot;�넀&quot;)) {</span>
+//                    int tmp= inputTemp % 10;
+//                    inputTemp = (inputTemp - tmp)/10;   �씠�젃寃뚰븯�젮�떎媛� �깮媛곹빐蹂대땲 嫄� 10�쑝濡� �굹�늻硫대맆�벏
+<span class="nc" id="L321">                    inputTemp = inputTemp/10;</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">                    if(inputTemp == 0)</span>
+<span class="nc" id="L323">                        inputText.setText(&quot;&quot;);</span>
+                    else
+<span class="nc" id="L325">                        inputText.setText(String.valueOf(inputTemp));</span>
+                }else{                                                              //0~9 �궗�씠�쓽 �닽�옄 input
+<span class="nc" id="L327">                    inputTemp = inputTemp*10 + Integer.parseInt(eventText);</span>
+<span class="nc" id="L328">                    inputText.setText(String.valueOf(inputTemp));</span>
+
+                }
+            }
+<span class="nc" id="L332">        }</span>
+    }
+
+    private void showInputCode() {
+<span class="nc" id="L336">        pScreen.setLayout(grid);</span>
+<span class="nc" id="L337">        pScreen.add(new JLabel(&quot;&lt;html&gt;&quot;+ &quot;肄붾뱶 踰덊샇瑜� �엯�젰�빐二쇱꽭�슂.&quot;+&quot;&lt;br&gt;&quot; + &quot;(肄붾뱶 踰덊샇�뒗 5�옄由� �닽�옄�엯�땲�떎.)&lt;/html&gt;&quot;));</span>
+<span class="nc" id="L338">    }</span>
+
+    private void showCardInput(JPanel pScreen) {
+<span class="nc" id="L341">        pScreen.setLayout(grid);</span>
+<span class="nc" id="L342">        pScreen.add(new JLabel(&quot;&lt;html&gt;&quot;+ &quot;移대뱶 �씪�젴踰덊샇瑜� �엯�젰�빐二쇱꽭�슂.&quot;+&quot;&lt;br&gt;&quot; + &quot;(�꽦怨� 踰덊샇: 1234 1234)&lt;/html&gt;&quot;));</span>
+<span class="nc" id="L343">    }</span>
+
+    private void showAccessibleDVMList(JPanel p2, String[] dvmList) {
+<span class="nc" id="L346">        p2.setLayout(grid);</span>
+<span class="nc bnc" id="L347" title="All 2 branches missed.">        for (int i = 0; i &lt; 2; i++) {</span>
+<span class="nc bnc" id="L348" title="All 2 branches missed.">            for (int j = 0; j &lt; 4; j++) {</span>
+<span class="nc" id="L349">                int num = i * 4 + j + 1;</span>
+<span class="nc bnc" id="L350" title="All 2 branches missed.">                if (!dvmList[i * 4 + j].equals(&quot;&quot;)) {</span>
+<span class="nc" id="L351">                    labelList.add(new JLabel(num + &quot;. &quot; + dvmList[i * 4 + j]));</span>
+                } else
+<span class="nc" id="L353">                    labelList.add(new JLabel(&quot;&quot;));</span>
+            }
+        }
+<span class="nc bnc" id="L356" title="All 2 branches missed.">        for (int i = 0; i &lt; 2; i++) {</span>
+<span class="nc bnc" id="L357" title="All 2 branches missed.">            for (int j = 0; j &lt; 4; j++) {</span>
+<span class="nc" id="L358">                gbc(labelList.get(i * 4 + j), j, i, 1, 1);</span>
+<span class="nc" id="L359">                labelList.get(i * 4 + j).setHorizontalAlignment(SwingConstants.CENTER);</span>
+            }
+        }
+<span class="nc bnc" id="L362" title="All 2 branches missed.">        for (int i = 0; i &lt; dvmList.length; i++) {</span>
+<span class="nc" id="L363">            p2.add(labelList.get(i));</span>
+        }
+<span class="nc" id="L365">    }</span>
+
+
+    private void gbc(JComponent j, int x, int y, int width, int height) {
+<span class="nc" id="L369">        gbc.gridx = x;</span>
+<span class="nc" id="L370">        gbc.gridy = y;</span>
+<span class="nc" id="L371">        gbc.gridwidth = width;</span>
+<span class="nc" id="L372">        gbc.gridheight = height;</span>
+<span class="nc" id="L373">        grid.setConstraints(j, gbc);</span>
+<span class="nc" id="L374">    }</span>
+
+    private void proceedCurrentDrink(JPanel pScreen, int inputNum) {
+<span class="nc" id="L377">        int drink_status = controller.selectCurrentDrink(inputNum);</span>
+<span class="nc bnc" id="L378" title="All 2 branches missed.">        if(drink_status == 0){ // EMPTY_ALL_STOCK : 紐⑤뱺 DVM �쓽 �옱怨좉� 0�엫</span>
+<span class="nc" id="L379">            JOptionPane.showMessageDialog(null, &quot;紐⑤뱺 DVM�뿉 �빐�떦 �쓬猷뚯쓽 �옱怨좉� �뾾�뒿�땲�떎. 珥덇린�솕硫댁쑝濡� �룎�븘媛묐땲�떎.&quot;);</span>
+            // �씤利� 肄붾뱶 硫붿떆吏� 異쒕젰
+<span class="nc" id="L381">            stage = 0;</span>
+<span class="nc" id="L382">            showAllDVMList(pScreen);</span>
+<span class="nc" id="L383">            pScreen.updateUI();</span>
+        }
+<span class="nc bnc" id="L385" title="All 2 branches missed.">        else if(drink_status == 1){ // CUR_IN_STOCK : �쁽�옱 �옄�뙋湲곗뿉 �옱怨좉� �엳�쓬</span>
+<span class="nc" id="L386">            ArrayList&lt;JLabel&gt; pay_label = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L387">            pScreen.setLayout(grid);</span>
+<span class="nc" id="L388">            pay_label.add(new JLabel(&quot;1. 移대뱶寃곗젣&quot;,JLabel.CENTER));</span>
+<span class="nc" id="L389">            pay_label.add(new JLabel(&quot;2. 肄붾뱶寃곗젣&quot;,JLabel.CENTER));</span>
+
+<span class="nc bnc" id="L391" title="All 2 branches missed.">            for (int i = 0; i &lt; 2; i++) {</span>
+<span class="nc bnc" id="L392" title="All 2 branches missed.">                for(int j = 0; j &lt; 1; j++) {</span>
+<span class="nc" id="L393">                    gbc(pay_label.get(i + j), j, i, 1, 1);</span>
+                }
+            }
+
+<span class="nc bnc" id="L397" title="All 2 branches missed.">            for (int i = 0; i &lt; 2; i++) {</span>
+<span class="nc" id="L398">                pScreen.add(pay_label.get(i));</span>
+            }
+<span class="nc" id="L400">            stage = 2;</span>
+<span class="nc" id="L401">        }</span>
+        else{ // OTHER_IN_STOCK : �떎瑜� �옄�뙋湲곗뿉 �옱怨좉� �엳�쓬
+<span class="nc" id="L403">            JOptionPane.showMessageDialog(null, &quot;�쁽�옱 DVM�뿉 �빐�떦 �쓬猷뚯쓽 �옱怨좉� �뾾吏�留� �떎瑜� DVM�뿉 �옱怨좉� 議댁옱�빀�땲�떎. �꽑寃곗젣濡� �꽆�뼱媛묐땲�떎.&quot;);</span>
+<span class="nc" id="L404">            showCardInput(pScreen);</span>
+<span class="nc" id="L405">            stage = 5;</span>
+        }
+<span class="nc" id="L407">    }</span>
+
+    private void proceedOtherDrink(JPanel pScreen, int inputNum) {
+<span class="nc" id="L410">        int drink_status = controller.selectOtherDrink(inputNum);</span>
+<span class="nc bnc" id="L411" title="All 2 branches missed.">        if(drink_status == 0){ // 紐⑤뱺 DVM�뿉 �옱怨좉� �뾾�쓬</span>
+<span class="nc" id="L412">            JOptionPane.showMessageDialog(null, &quot;紐⑤뱺 DVM�뿉 �빐�떦 �쓬猷뚯쓽 �옱怨좉� �뾾�뒿�땲�떎. 珥덇린�솕硫댁쑝濡� �룎�븘媛묐땲�떎.&quot;);</span>
+            // �씤利� 肄붾뱶 硫붿떆吏� 異쒕젰
+<span class="nc" id="L414">            stage = 0;</span>
+<span class="nc" id="L415">            showAllDVMList(pScreen);</span>
+<span class="nc" id="L416">            pScreen.updateUI();</span>
+        }
+        else{ // OHTER_IN_STOCK : �떎瑜� �옄�뙋湲곗뿉 �옱怨좉� �엳�쓬
+<span class="nc" id="L419">            JOptionPane.showMessageDialog(null, &quot;�쁽�옱 DVM�뿉 �빐�떦 �쓬猷뚯쓽 �옱怨좉� �뾾吏�留� �떎瑜� DVM�뿉 �옱怨좉� 議댁옱�빀�땲�떎. �꽑寃곗젣濡� �꽆�뼱媛묐땲�떎.&quot;);</span>
+<span class="nc" id="L420">            showCardInput(pScreen);</span>
+<span class="nc" id="L421">            stage = 5;</span>
+        }
+<span class="nc" id="L423">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
