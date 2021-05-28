@@ -11,34 +11,31 @@ class MessageTest {
 
     @Test
     void getSrc_id() {
-        Message msg2 = msg1.createMessage(1,1,1);
-        assertEquals(1,msg2.getSrc_id());
-        Message msg4 = msg3.createMessage(10,1,1);
-        assertEquals(10,msg4.getSrc_id());
-        Message msg6 = msg5.createMessage(100,1,1);
-        assertEquals(100,msg6.getSrc_id());
-        Message msg8 = msg7.createMessage(1000,1,1);
-        assertEquals(1000,msg8.getSrc_id());
-        Message msg10 = msg9.createMessage(10000,1,1);
-        assertEquals(10000,msg10.getSrc_id());
+        msg1.createMessage(1,1,1);
+        assertEquals(1,msg1.getSrc_id());
+        msg3.createMessage(10,1,1);
+        assertEquals(10,msg3.getSrc_id());
+        msg5.createMessage(100,1,1);
+        assertEquals(100,msg5.getSrc_id());
+        msg7.createMessage(1000,1,1);
+        assertEquals(1000,msg7.getSrc_id());
+        msg9.createMessage(10000,1,1);
+        assertEquals(10000,msg9.getSrc_id());
     }
 
-//    @Test
-//    void setSrc_id() {
-//    }
 
     @Test
     void getDst_id() {
-        Message msg2 = msg1.createMessage(1,1,1);
-        assertEquals(1,msg2.getDst_id());
-        Message msg4 = msg3.createMessage(10,10,1);
-        assertEquals(10,msg4.getDst_id());
-        Message msg6 = msg5.createMessage(100,100,1);
-        assertEquals(100,msg6.getDst_id());
-        Message msg8 = msg7.createMessage(1000,1000,1);
-        assertEquals(1000,msg8.getDst_id());
-        Message msg10 = msg9.createMessage(10000,10000,1);
-        assertEquals(10000,msg10.getDst_id());
+        msg1.createMessage(1,1,1);
+        assertEquals(1,msg1.getDst_id());
+        msg3.createMessage(10,10,1);
+        assertEquals(10,msg3.getDst_id());
+        msg5.createMessage(100,100,1);
+        assertEquals(100,msg5.getDst_id());
+        msg7.createMessage(1000,1000,1);
+        assertEquals(1000,msg7.getDst_id());
+        msg9.createMessage(10000,10000,1);
+        assertEquals(10000,msg9.getDst_id());
     }
 
 //    @Test
@@ -47,38 +44,30 @@ class MessageTest {
 
     @Test
     void getMsg_type() {
-        Message msg2 = msg1.createMessage(1,1,1);
-        assertEquals(1,msg2.getMsg_type());
-        Message msg4 = msg3.createMessage(10,10,2);
-        assertEquals(2,msg4.getMsg_type());
-        Message msg6 = msg5.createMessage(100,100,3);
-        assertEquals(3,msg6.getMsg_type());
-        Message msg8 = msg7.createMessage(1000,1000,4);
-        assertEquals(4,msg8.getMsg_type());
-        Message msg10 = msg9.createMessage(10000,10000,5);
-        assertEquals(5,msg10.getMsg_type());
+        msg1.createMessage(1,1,1);
+        assertEquals(1,msg1.getMsg_type());
+        msg3.createMessage(10,10,2);
+        assertEquals(2,msg3.getMsg_type());
+        msg5.createMessage(100,100,3);
+        assertEquals(3,msg5.getMsg_type());
+        msg7.createMessage(1000,1000,4);
+        assertEquals(4,msg7.getMsg_type());
+        msg9.createMessage(10000,10000,5);
+        assertEquals(5,msg9.getMsg_type());
     }
-
-//    @Test
-//    void setMsg_type() {
-//    }
-
-//    @Test
-//    void setMsg() {
-//    }
 
     @Test
     void getMsg() {
-        Message msg2 = msg1.createMessage(1,1,1,"안녕하세요");
-        assertEquals("안녕하세요",msg2.getMsg());
-        Message msg4 = msg3.createMessage(10,10,2,"반갑습니다");
-        assertEquals("반갑습니다",msg4.getMsg());
-        Message msg6 = msg5.createMessage(100,100,3,"잘부탁드립니다");
-        assertEquals("잘부탁드립니다",msg6.getMsg());
-        Message msg8 = msg7.createMessage(1000,1000,4,"MS129");
-        assertEquals("MS129",msg8.getMsg());
-        Message msg10 = msg9.createMessage(10000,10000,5,"DVM");
-        assertEquals("DVM",msg10.getMsg());
+        msg1.createMessage(1,1,1,"안녕하세요");
+        assertEquals("안녕하세요",msg1.getMsg());
+        msg3.createMessage(10,10,2,"반갑습니다");
+        assertEquals("반갑습니다",msg3.getMsg());
+        msg5.createMessage(100,100,3,"잘부탁드립니다");
+        assertEquals("잘부탁드립니다",msg5.getMsg());
+        msg7.createMessage(1000,1000,4,"MS129");
+        assertEquals("MS129",msg7.getMsg());
+        msg9.createMessage(10000,10000,5,"DVM");
+        assertEquals("DVM",msg9.getMsg());
     }
 
     @Test
