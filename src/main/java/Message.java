@@ -6,6 +6,17 @@ public class Message implements Serializable {
     private int dst_id;
     private int msg_type;
     private String msg;
+    public static final long serialVersionUID = 42L;
+
+    public Message() {
+
+    }
+    public Message(int src_id, int dst_id, int msg_type, String msg) {
+        this.src_id = src_id;
+        this.dst_id = dst_id;
+        this.msg_type = msg_type;
+        this.msg = msg;
+    }
 
     public int getSrc_id() {
         return this.src_id;

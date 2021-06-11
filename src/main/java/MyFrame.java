@@ -1,34 +1,103 @@
-import javax.swing.*;
-import java.awt.*;
+
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JComponent;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridLayout;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Image;
+
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class MyFrame extends JFrame {
 
-    int stage = 0;
-    int inputNum = 0;
-    int inputTemp = 0;
-    JTextField inputText = new JTextField("          ", SwingConstants.CENTER); // 사용자 입력을 받는 텍스트 필드;
-    String[] num_list = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "←", "확인"};
-    JButton[] dialButton_list = new JButton[12];
-    ArrayList<JLabel> labelList = new ArrayList<JLabel>();
+    private int stage = 0;
+    private int inputNum = 0;
+    private int inputTemp = 0;
+    private JTextField inputText = new JTextField("          ", SwingConstants.CENTER); // 사용자 입력을 받는 텍스트 필드;
+    private String[] num_list = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "←", "확인"};
+    private JButton[] dialButton_list = new JButton[12];
+    private ArrayList<JLabel> labelList = new ArrayList<JLabel>();
+
+    public int getStage(){
+        return stage;
+    }
+    public int getInputNum(){
+        return inputNum;
+    }
+    public int getInputTemp(){
+        return inputTemp;
+    }
+    public JTextField getInputText(){
+        return inputText;
+    }
+    public String[] getNum_list(){
+        return num_list;
+    }
+    public JButton[] getDialButton_list(){
+        return dialButton_list;
+    }
+    public ArrayList<JLabel> getLabelList(){
+        return labelList;
+    }
+
 
     /////////////// panel 들 ///////////////
-    JPanel pDial = new JPanel();
-    JPanel panelDown = new JPanel();
-    JPanel pTemp = new JPanel();
-    JPanel pScreen = new JPanel();
-    JPanel pInput = new JPanel();
+    private JPanel pDial = new JPanel();
+    private JPanel panelDown = new JPanel();
+    private JPanel pTemp = new JPanel();
+    private JPanel pScreen = new JPanel();
+    private JPanel pInput = new JPanel();
+
+    public JPanel getpDial(){
+        return pDial;
+    }
+    public JPanel getPanelDown(){
+        return panelDown;
+    }
+    public JPanel getpTemp(){
+        return pTemp;
+    }
+    public JPanel getpScreen(){
+        return pScreen;
+    }
+    public JPanel getpInput(){
+        return pInput;
+    }
+
 
     /////////////// gridBagLayout 편하게 사용하려고 전역으로 선언 ///////////////
-    GridBagLayout grid = new GridBagLayout();
-    GridBagConstraints gbc = new GridBagConstraints();
+    private GridBagLayout grid = new GridBagLayout();
+    private GridBagConstraints gbc = new GridBagConstraints();
 
+    public GridBagLayout getGrid(){
+        return grid;
+    }
+    public GridBagConstraints getGbc(){
+        return gbc;
+    }
     // controller 객체
-    Controller controller = new Controller();
+    private Controller controller = new Controller();
 
-    MyFrame() {
+    public Controller getController(){
+        return controller;
+    }
+
+
+    MyFrame() throws IOException {
         init();
     }
 
@@ -57,13 +126,13 @@ public class MyFrame extends JFrame {
         // 루트 프레임에 button들 JPanel add
 
         pInput.setLayout(new BorderLayout());
-        pInput.add(inputText,BorderLayout.CENTER);
+        pInput.add(inputText, BorderLayout.CENTER);
 
         gbc(pTemp, 0, 0, 4, 1);
         gbc(pInput, 0, 1, 4, 1);
         gbc(pDial, 0, 2, 4, 4);
 
-        pInput.setBackground(Color.GRAY);
+        pInput.setBackground( Color.GRAY);
 
         panelDown.add(pTemp);
         panelDown.add(pInput);
@@ -89,8 +158,13 @@ public class MyFrame extends JFrame {
         pScreen.setLayout(grid);
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 4; j++) {
-                ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/main/resources/image/vm_image.png")
-                        .getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT));
+                URL imageURL = getClass().getClassLoader().getResource("image/vm_image.png");
+                ImageIcon imageIcon = new ImageIcon(imageURL);
+                Image image = imageIcon.getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT);
+                imageIcon.setImage(image);
+//                ImageIcon imageIcon = new ImageIcon("image/vm_image.png");
+//                Image image = imageIcon.getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT);
+//                imageIcon.setImage(image);
                 int num = i * 4 + j;
                 int id = dvmInfo.get(num).get(0);
                 int address = dvmInfo.get(num).get(1);
@@ -114,13 +188,15 @@ public class MyFrame extends JFrame {
         ArrayList<JLabel> label_drink = new ArrayList<>();
         pScreen.setLayout(grid);
         DVM currentDVM = controller.selectDVM(num);
-        ArrayList<Drink> currentDrinkList = currentDVM.getDrink_list();
+        ArrayList<Drink> currentDrinkList = (ArrayList<Drink>) currentDVM.getDrink_list();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
                 int index = i * 5 + j;
                 Drink drink = currentDrinkList.get(index);
-                ImageIcon imageIcon = new ImageIcon(new ImageIcon(drink.getImgURL())
-                        .getImage().getScaledInstance(30,30,Image.SCALE_DEFAULT));
+                URL imageURL = getClass().getClassLoader().getResource(drink.getImgURL());
+                ImageIcon imageIcon = new ImageIcon(imageURL);
+                Image image = imageIcon.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT);
+                imageIcon.setImage(image);
                 String name = drink.getName();
                 int price = drink.getPrice();
                 int stock = drink.getStock();
@@ -173,7 +249,7 @@ public class MyFrame extends JFrame {
                     inputNum = inputTemp;
                     inputText.setText("");
                     // 선택완료 메시지
-                    JOptionPane aa=new JOptionPane();
+//                    JOptionPane aa=new JOptionPane();
                     if(inputNum >=1 && inputNum <= 8) {
                         JOptionPane.showMessageDialog(null, inputNum + "번 DVM을 선택하셨습니다.");
                         pScreen.removeAll();
@@ -331,7 +407,8 @@ public class MyFrame extends JFrame {
                             showAllDVMList(pScreen);
                             pScreen.updateUI();
                             break;
-
+                        default:
+                            System.out.println("잘못된 접근입니다.(MyFrame Stage 관련)");
                     }
                 }else if(eventText.equals("←")) {
 //                    int tmp= inputTemp % 10;

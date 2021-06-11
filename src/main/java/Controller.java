@@ -1,16 +1,43 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Controller {
-    ArrayList<Code> code_list = new ArrayList<Code>();
-    int currentDVMIndex;
-    ArrayList<DVM> accessible_DVM_list;
-    Card card_info;
-    OtherDVMs otherDVMs;
-    Drink selected_drink;
-    CardPayment cardPayment = new CardPayment();
-    CodePayment codePayment = new CodePayment();
+    private ArrayList<Code> code_list = new ArrayList<Code>();
+    private int currentDVMIndex;
+    private ArrayList<DVM> accessible_DVM_list;
+//    private Card card_info;
+    private OtherDVMs otherDVMs;
+    private Drink selected_drink;
+    private CardPayment cardPayment = new CardPayment();
+    private CodePayment codePayment = new CodePayment();
 
-    Controller(){
+    public ArrayList<Code> getCodeList(){
+        return code_list;
+    }
+    public int getCurrentDVMIndex(){
+        return currentDVMIndex;
+    }
+    public ArrayList<DVM> getAccessible_DVM_list(){
+        return accessible_DVM_list;
+    }
+//    public Card getCard_info(){
+//        return card_info;
+//    }
+    public OtherDVMs getOtherDVMs(){
+        return otherDVMs;
+    }
+    public Drink getSelected_drink(){
+        return selected_drink;
+    }
+    public CardPayment getCardPayment(){
+        return cardPayment;
+    }
+    public CodePayment getCodePayment(){
+        return codePayment;
+    }
+
+
+    Controller() throws IOException {
         otherDVMs = new OtherDVMs();
     }
 
@@ -35,7 +62,7 @@ public class Controller {
         return otherDVMs.getDVM(num - 1);
     }
 
-    int selectCurrentDrink(int dialNum) {
+    public int selectCurrentDrink(int dialNum) {
         final int EMPTY_ALL_STOCK = 0; // 모든 DVM의 재고가 0임
         final int CUR_IN_STOCK = 1;    // 현재 DVM에 재고가 있음
         final int OTHER_IN_STOCK = 2;  // 다른 DVM에 재고가 있음
@@ -66,7 +93,7 @@ public class Controller {
             return OTHER_IN_STOCK;
     }
 
-    String insertCard(int card_num, boolean isPrepayment){
+    public String insertCard(int card_num, boolean isPrepayment){
         Boolean card_available = cardPayment.getCard_available(card_num);
         DVM currentDVM = otherDVMs.getDVM(currentDVMIndex);
         if(!card_available){
@@ -107,7 +134,7 @@ public class Controller {
         return code_list;
     }
 
-    String enterCode(int code_num) {
+    public String enterCode(int code_num) {
         Boolean codeAvailable = checkCodeAvailable(code_num);
         DVM currentDVM = otherDVMs.getDVM(currentDVMIndex);
         if(!codeAvailable){
@@ -121,7 +148,7 @@ public class Controller {
         return result2;
     }
 
-    Code getCodeInfo(int code_num) {
+    private Code getCodeInfo(int code_num) {
         for(Code code : code_list){
             if(code.getCode() == code_num){
                 return code;
@@ -130,12 +157,12 @@ public class Controller {
         return null;
     }
 
-    ArrayList<Code> deleteCode(Code code_info) {
+    private ArrayList<Code> deleteCode(Code code_info) {
         code_list.removeIf(code -> code.getCode() == code_info.getCode());
         return code_list;
     }
 
-    public Boolean checkCodeAvailable(int code_num) {
+    private Boolean checkCodeAvailable(int code_num) {
         for (Code code : code_list) {
             if (code_num == code.getCode()) {
                 return true;

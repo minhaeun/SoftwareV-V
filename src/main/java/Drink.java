@@ -1,12 +1,10 @@
-import java.util.ArrayList;
-import java.util.List;
 
 public class Drink {
 
-    private String name;
+    private final String name;
     private int price;
     private int stock;
-    private String imgURL;
+    private final String imgURL;
 
     public Drink(String name, int price, int stock, String imgURL){
         super();
@@ -30,9 +28,9 @@ public class Drink {
         return price;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
+//    public void setPrice(int price) {
+//        this.price = price;
+//    }
 
     public int getStock(){
         return stock;

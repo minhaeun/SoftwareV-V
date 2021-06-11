@@ -27,25 +27,49 @@ class CodePaymentTest {
     Code code_info9 = new Code(99999, drink_info9);
     Code code_info10 = new Code(00000, drink_info10);
 
-
-//    @Test
-//    void getCode_info() {
-//    }
-//
-//    @Test
-//    void setCode_info() {
-//    }
-//
-//    @Test
-//    void getCodeAvailable() {
-//    }
-//
-//    @Test
-//    void setCodeAvailable() {
-//    }
+    CodePayment codePayment1 = new CodePayment(code_info3,true);
 
     @Test
-    void codePayment() { // drink_info를 반환
+    void getCode_info() {
+        CodePayment codePayment2 = new CodePayment();
+        codePayment2.setCode_info(code_info1);
+
+        Code code = codePayment2.getCode_info();
+
+        assertEquals(code_info1, code);
+        assertEquals(code_info1.getCode(), code.getCode());
+        assertEquals(code_info1.getDrink(), code.getDrink());
+    }
+
+    @Test
+    void setCode_info() {
+        CodePayment codePayment = new CodePayment();
+        codePayment.setCode_info(code_info1);
+        assertEquals(code_info1,codePayment.getCode_info());
+
+        codePayment.setCode_info(code_info2);
+        assertEquals(code_info2,codePayment.getCode_info());
+
+        codePayment1.setCode_info(code_info4);
+        assertEquals(code_info4, codePayment1.getCode_info());
+
+    }
+
+    @Test
+    void getCodeAvailable() {
+        codePayment1.setCode_info(code_info3);
+        codePayment1.setCodeAvailable(true);
+        assertTrue(codePayment1.getCodeAvailable());
+    }
+
+    @Test
+    void setCodeAvailable() {
+        codePayment1.setCodeAvailable(false);
+        assertEquals(false, codePayment1.getCodeAvailable());
+    }
+
+    @Test
+    void codePayment1() { // drink_info를 반환
         assertEquals(drink_info1, code_info1.getDrink());
 
         assertEquals(drink_info2, code_info2.getDrink());
@@ -65,5 +89,27 @@ class CodePaymentTest {
         assertEquals(drink_info9, code_info9.getDrink());
 
         assertEquals(drink_info10, code_info10.getDrink());
+    }
+
+    @Test
+    void CodePayment2(){
+        CodePayment cp1 = new CodePayment();
+        CodePayment cp2 = new CodePayment();
+        cp1.setCodeAvailable(true);
+        cp1.setCode_info(code_info1);
+        cp2.setCodeAvailable(false);
+        cp2.setCode_info(code_info2);
+
+        assertEquals(true, cp1.getCodeAvailable());
+        assertEquals(false, cp2.getCodeAvailable());
+
+        assertEquals(code_info1, cp1.getCode_info());
+        assertEquals(code_info2, cp2.getCode_info());
+    }
+
+    @Test
+    void codePaymentDrinkInfo(){
+        CodePayment cp1 = new CodePayment(code_info1, true);
+        assertEquals(drink_info1,cp1.codePayment(code_info1));
     }
 }
